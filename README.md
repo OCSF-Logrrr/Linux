@@ -364,8 +364,8 @@ htmlspecialchars를 통해 html 엔티티로 script 태그가 치환되기 때�
 만약 로그로 공격을 탐지하는 경우 `&lt;script&gt;` 등이 포함된다면 XSS 공격으로 탐지하면 될 것 같다.
 
 📌***결론***<br>
-_XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우에는 `/var/log/mysql/general.log` 로그에 INSERT와 UPDATE문에서 `&lt;script&gt;` 등의 문자열이 포함된 경우를 탐지해야 한다._
-_+ 필터링이 안되는 경우는(없겟지만..?) `<script>` 등을 탐지하면 될 듯_
+_XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우에는 `/var/log/mysql/general.log` 로그에 INSERT와 UPDATE문에서 `&lt;script&gt;` 등의 문자열이 포함된 경우를 탐지해야 한다._ <br>
+_+ 필터링이 안되는 경우는(없겟지만..?) `<script>` 등을 탐지하면 될 듯_ <br>
 _(탐지해야하는 문자열들은 다른 공격들도 알아본 후 추가적으로 진행)_
 
 ### Reflected XSS (apache/access.log)
@@ -412,7 +412,7 @@ $search_con=htmlspecialchars($_GET['search']);
 만약 로그로 공격을 탐지하는 경우 `%3Cscript%3E` 등이 포함된다면 XSS 공격으로 탐지하면 될 것 같다.
 
 📌***결론***<br>
-_XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우와 필터링이 안된 경우에는 `/var/log/apache2/access.log` 로그에서 `%3Cscript%3E` 등의 문자열이 포함된 경우를 탐지해야 한다._
+_XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우와 필터링이 안된 경우에는 `/var/log/apache2/access.log` 로그에서 `%3Cscript%3E` 등의 문자열이 포함된 경우를 탐지해야 한다._ <br>
 _(탐지해야하는 문자열들은 다른 공격들도 알아본 후 추가적으로 진행)_
 
 # 로그 수집기
