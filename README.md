@@ -127,7 +127,7 @@ sudo apt install libapache2-mod-php
 아래의 경로에서 PHP 로깅 설정 (버전은 8.3으로 되어있기에 어떤 버전을 설치하는지에 따라 다른 명령어 사용)
 
 ```bash
-sudo vi /etc/php/8.3/cli/php.ini
+sudo vi /etc/php/8.3/apache2/php.ini
 ```
 
 ![php_error log](https://github.com/user-attachments/assets/5e729302-0991-4107-9484-b9879801fb53)
