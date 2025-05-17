@@ -303,7 +303,7 @@ sqlmap/1.8.4#stable (https://sqlmap.org)
 ⇒ 예를 들어 sqlmap 등의 도구를 1차적으로 탐지한 후 curl 등의 경우와 같이 일반적으로 사용되는 브라우저가 아닌 경우 별도로 다르게 분류하여 결과를 내는 것도 괜찮을 것 같다.
 
 
-📌***결론***
+📌***결론***<br>
 _sqlmap, nikto 등의 스캐닝 도구가 포함된 user-agent가 `/var/log/apache2/access.log` 에서 발견되는 경우를 탐지_
 
 
@@ -363,7 +363,7 @@ htmlspecialchars를 통해 html 엔티티로 script 태그가 치환되기 때�
 
 만약 로그로 공격을 탐지하는 경우 `&lt;script&gt;` 등이 포함된다면 XSS 공격으로 탐지하면 될 것 같다.
 
-📌***결론***
+📌***결론***<br>
 _XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우에는 `/var/log/mysql/general.log` 로그에 INSERT와 UPDATE문에서 `&lt;script&gt;` 등의 문자열이 포함된 경우를 탐지해야 한다._
 _+ 필터링이 안되는 경우는(없겟지만..?) `<script>` 등을 탐지하면 될 듯_
 _(탐지해야하는 문자열들은 다른 공격들도 알아본 후 추가적으로 진행)_
@@ -411,7 +411,7 @@ $search_con=htmlspecialchars($_GET['search']);
 
 만약 로그로 공격을 탐지하는 경우 `%3Cscript%3E` 등이 포함된다면 XSS 공격으로 탐지하면 될 것 같다.
 
-📌***결론***
+📌***결론***<br>
 _XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우와 필터링이 안된 경우에는 `/var/log/apache2/access.log` 로그에서 `%3Cscript%3E` 등의 문자열이 포함된 경우를 탐지해야 한다._
 _(탐지해야하는 문자열들은 다른 공격들도 알아본 후 추가적으로 진행)_
 
