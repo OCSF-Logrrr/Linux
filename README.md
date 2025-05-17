@@ -172,7 +172,7 @@ error log는 별도의 설정을 해두지 않았다면 `/var/log/mysql/error.lo
 ![cat-error log-mysql](https://github.com/user-attachments/assets/e0a6ba5f-08a4-4ef5-b202-33dce8a9bd7f)
 
 
-general log도 php의 에러 로그와 같이 로깅 설정을 해주고, 경로까지 지정해주어야 한다. 때문에 같은 문제가 있을 수 있지만,, 일단 `/var/log/mysql/general.log` 경로에 저장해주기로 했다.
+general log도 php의 에러 로그와 같이 로깅 설정을 해주고, 경로까지 지정해주어야 한다. 때문에 php 로그와 같은 문제가 있을 수 있지만,, 일단 `/var/log/mysql/general.log` 경로에 저장해주기로 했다.
 
 ```sql
 SHOW VARIABLES LIKE 'general%';
