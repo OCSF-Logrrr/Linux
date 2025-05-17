@@ -13,11 +13,7 @@ apache 로그는 기본적으로 error.log와 access.log 2가지가 존재한다
 
 우분투 24.04에서 환경 구축을 진행하였으며, 웹 사이트는 개인 실습용으로 제작했던 게시판을 사용하였다. 
 
-<aside>
-
 📌**실습을 하다보니 개인용 게시판보다 DVWA 등의 대응 방안이 완전히 적용된 코드와 아닌 코드를 모두 편리하게 실행 가능한 환경에서 해보는게 좋다고 느꼈다.. 때문에 XSS 이후 실습에서는 DVWA를 사용해볼 생각이다.**
-
-</aside>
 
 ## apache 설치
 
@@ -27,7 +23,8 @@ apache 설치
 sudo apt install apache2
 ```
 
-![스크린샷 2025-05-16 오후 11.37.57.png](attachment:248466ce-f973-4362-8712-facd762b6c90:스크린샷_2025-05-16_오후_11.37.57.png)
+![apache_install](https://github.com/user-attachments/assets/3c913e3d-1155-4e2d-9d8e-37fa5cdb2f24)
+
 
 apache 서비스 시작 후
 
@@ -41,21 +38,25 @@ sudo systemctl start apache2
 sudo systemctl status apache2
 ```
 
-![스크린샷 2025-05-16 오후 11.42.16.png](attachment:cc1ada0a-8800-40f3-8f8e-d2dcacfc7f41:스크린샷_2025-05-16_오후_11.42.16.png)
+![status_apache](https://github.com/user-attachments/assets/c4608506-574d-4021-a2a1-a34a3a9d647d)
+
 
 localhost에 접속 시 apache 화면이 나오는 것 확인 가능
 
-![스크린샷 2025-05-16 오후 11.45.43.png](attachment:c3ba9c9e-515a-4767-a477-3a378b31a978:스크린샷_2025-05-16_오후_11.45.43.png)
+![localhost](https://github.com/user-attachments/assets/fbcd7a76-48fd-4b20-9a3c-e87e23434e58)
+
 
 ## 로그 위치 및 내용 확인
 
 아래와 같이 /var/log/apache2 경로에 error.log와 access.log가 존재하는 것을 확인
 
-![스크린샷 2025-05-17 오전 12.01.22.png](attachment:f83e9b10-ea0a-459d-9ca8-d82473233c2b:스크린샷_2025-05-17_오전_12.01.22.png)
+![apache_log](https://github.com/user-attachments/assets/13dee09f-f1cd-4a66-b291-c759636ffeda)
+
 
 ### access.log
 
-![스크린샷 2025-05-17 오전 12.02.35.png](attachment:fe2e2f52-7db9-4bef-9e48-a038b185301b:스크린샷_2025-05-17_오전_12.02.35.png)
+![access log_apache](https://github.com/user-attachments/assets/4f8e1021-0da3-4824-b275-83d81e8401aa)
+
 
 현재 로그를 살펴보면
 
@@ -71,7 +72,8 @@ get 요청으로 기본 웹 루트인 /var/www/html/index.html에 접속한 기�
 
 ### error.log
 
-![스크린샷 2025-05-17 오전 12.10.29.png](attachment:fa6318fe-c7fd-4a91-8d30-49d0d26455b2:스크린샷_2025-05-17_오전_12.10.29.png)
+![error log_apache](https://github.com/user-attachments/assets/35448b48-a870-469d-a052-5e7bfe681d29)
+
 
 해당 로그도 살펴보면
 
@@ -92,7 +94,8 @@ mysql 설치
 sudo apt install mysql-server
 ```
 
-![스크린샷 2025-05-17 오후 3.16.28.png](attachment:2a019b1f-6049-4f71-a6be-feb7ceab1494:스크린샷_2025-05-17_오후_3.16.28.png)
+<img width="1578" alt="mysql_install" src="https://github.com/user-attachments/assets/80c2b6c0-60bd-4301-9077-d8d0bda4ebde" />
+
 
 <aside>
 💡
@@ -119,7 +122,8 @@ php 설치
 sudo apt install php
 ```
 
-![스크린샷 2025-05-17 오후 3.15.29.png](attachment:14481027-a10b-4bff-af8a-dff7a77933da:스크린샷_2025-05-17_오후_3.15.29.png)
+<img width="1578" alt="php_install" src="https://github.com/user-attachments/assets/ba4a4ec4-2c1b-4176-bce9-d7023522173f" />
+
 
 php에서 mysql과 apache를 사용할 수 있도록 모듈 설치
 
@@ -127,13 +131,15 @@ php에서 mysql과 apache를 사용할 수 있도록 모듈 설치
 sudo apt install php-mysql
 ```
 
-![스크린샷 2025-05-17 오후 3.18.09.png](attachment:85589174-a5ce-42f3-acd5-7eba0249597d:스크린샷_2025-05-17_오후_3.18.09.png)
+<img width="1578" alt="php-mysql" src="https://github.com/user-attachments/assets/2716a23e-6e37-47e4-8fc3-93943f1b7a1e" />
+
 
 ```bash
 sudo apt install libapache2-mod-php
 ```
 
-![스크린샷 2025-05-17 오후 3.18.39.png](attachment:4362b387-6e62-44f5-bec7-d460ea3195cd:스크린샷_2025-05-17_오후_3.18.39.png)
+<img width="1578" alt="php-apache" src="https://github.com/user-attachments/assets/ecd7c4fb-a952-49c4-bb4c-821372b33052" />
+
 
 ### PHP 및 MySQL 로깅 설정
 
@@ -143,7 +149,8 @@ sudo apt install libapache2-mod-php
 sudo vi /etc/php/8.3/cli/php.ini
 ```
 
-![스크린샷 2025-05-17 오후 3.32.11.png](attachment:5c5db4f9-9c1e-4e46-9b34-3e4654c7e0c1:30107fd4-4154-4f02-adab-c181615d00c5.png)
+![php_error log](https://github.com/user-attachments/assets/5e729302-0991-4107-9484-b9879801fb53)
+
 
 위 부분에 명시된 경로 및 파일에 PHP 에러 로그가 기록되는데,, 여기서 문제가 있다면, 사용자가 어떤 경로를 명시하는 지에 따라서 로그 수집기로 수집할 때 각 환경에 맞는 경로로 사용해야하는 문제가 발생한다고 한다..
 
@@ -151,11 +158,13 @@ sudo vi /etc/php/8.3/cli/php.ini
 
 일단 `/var/log/php/php_error.log` 로 설정 해둠..!! (php 디렉토리 만들고 권한 줘야함!!)
 
-![스크린샷 2025-05-17 오후 3.37.46.png](attachment:f61037b6-b7d9-4ee2-8cb7-ff0595558329:71b6da20-1443-4fd2-bb05-dc486bdf0dab.png)
+![php-php_error log](https://github.com/user-attachments/assets/18c672e9-f32b-46d5-9a97-f5bf9aebf5c2)
+
 
 아래와 같이 에러를 로그파일에 기록하는 설정도 On으로 해주었다.
 
-![스크린샷 2025-05-17 오후 3.37.19.png](attachment:9f2eb57e-eb2b-4b60-ba7b-1537bc448fa0:6088d143-7909-431c-a282-66e45426de97.png)
+![php-log_errors](https://github.com/user-attachments/assets/8da31eff-899b-4c2a-b52a-b7f981a0dfdd)
+
 
 설정이 끝나고 apache를 재시작 해주면 적용된다. (아직 php를 실행시키지 않아 로그는 아래에서 확인할 예정)
 
@@ -174,11 +183,13 @@ error log는 별도의 설정을 해두지 않았다면 `/var/log/mysql/error.lo
 
 아무 설정 없다면 실제로 아래와 같이 `/var/log/mysql/error.log` 가 존재한다는 것을 확인했다.
 
-![스크린샷 2025-05-17 오후 4.13.06.png](attachment:de3017b4-9d72-4ce5-97bc-e78261dbf1c2:스크린샷_2025-05-17_오후_4.13.06.png)
+<img width="1578" alt="error log-mysql-ok" src="https://github.com/user-attachments/assets/2a95443c-e339-4d3d-9e2f-d967a4ac7176" />
+
 
 내용은 아래와 같이 나온다
 
-![스크린샷 2025-05-17 오후 4.45.15.png](attachment:f482c4a6-9b5f-4d79-a144-8408fb41e7b8:107c94b8-2179-4800-8847-3bcdc80469c0.png)
+![cat-error log-mysql](https://github.com/user-attachments/assets/e0a6ba5f-08a4-4ef5-b202-33dce8a9bd7f)
+
 
 general log도 php의 에러 로그와 같이 로깅 설정을 해주고, 경로까지 지정해주어야 한다. 때문에 같은 문제가 있을 수 있지만,, 일단 `/var/log/mysql/general.log` 경로에 저장해주기로 했다.
 
@@ -188,7 +199,8 @@ SHOW VARIABLES LIKE 'general%';
 
 위의 명령어로 조회해보면
 
-![스크린샷 2025-05-17 오후 4.37.16.png](attachment:644602c3-ef10-4ff3-8afc-6090ab689019:스크린샷_2025-05-17_오후_4.37.16.png)
+<img width="602" alt="mysql-general log" src="https://github.com/user-attachments/assets/00db3ec2-74af-4b89-91d2-969aa1e01aba" />
+
 
 위와 같이 기본 설정이 되어있는 것을 알 수 있다.
 
@@ -204,17 +216,20 @@ SET GLOBAL general_log = ON;
 SET GLOBAL general_log_file = '/var/log/mysql/general.log';
 ```
 
-![스크린샷 2025-05-17 오후 4.42.46.png](attachment:d344a0c5-9c38-46b4-96b8-1143aaf9f3ad:스크린샷_2025-05-17_오후_4.42.46.png)
+<img width="506" alt="mysql_change" src="https://github.com/user-attachments/assets/f08539ea-3c0d-40fe-9737-ea6a8eeb50de" />
+
 
 해당 로그 파일의 출력은 아래와 같이 나온다.
 
-![스크린샷 2025-05-17 오후 4.46.18.png](attachment:50180e4e-8751-4ffa-b556-e53f398f4e31:스크린샷_2025-05-17_오후_4.46.18.png)
+<img width="793" alt="cat_general log" src="https://github.com/user-attachments/assets/3a70f8fe-6188-474b-84ea-d95e34b5466c" />
+
 
 ### 웹 사이트 실행 및 데이터베이스 구성
 
 개인 게시판의 코드를 /var/www/html 경로에 가져오고, mysql 데이터베이스 테이블을 만드는 과정이다.
 
-![스크린샷 2025-05-17 오후 4.58.20.png](attachment:bfe8159a-eab9-4955-97e8-b6101191bc4f:스크린샷_2025-05-17_오후_4.58.20.png)
+<img width="469" alt="web_dir" src="https://github.com/user-attachments/assets/1ba51617-9f82-4fc6-b9cd-19183d1da13f" />
+
 
 코드는 그냥 로컬에 있는 페이지를 가져왔고, 데이터베이스 설정은 아래와 같이 해주었다.
 
@@ -224,7 +239,8 @@ SET GLOBAL general_log_file = '/var/log/mysql/general.log';
 CREATE DATABASE DB;
 ```
 
-![스크린샷 2025-05-17 오후 5.02.14.png](attachment:98727686-13ce-4438-afd1-a85fb38fd322:스크린샷_2025-05-17_오후_5.02.14.png)
+<img width="359" alt="DB" src="https://github.com/user-attachments/assets/449557b9-3499-4159-b382-56653c62adcb" />
+
 
 작업할 데이터베이스를 선택해주고
 
@@ -257,13 +273,14 @@ CREATE TABLE board(
 );
 ```
 
-![스크린샷 2025-05-17 오후 5.14.30.png](attachment:9e15bd6e-40a9-4f4c-96bc-ee405d47d3cb:스크린샷_2025-05-17_오후_5.14.30.png)
+<img width="262" alt="tables" src="https://github.com/user-attachments/assets/375725f1-71ea-479d-b4d6-e39944aff4a1" />
+
 
 ### 웹 사이트 접속 후 동작 확인
 
 이제 웹 사이트에 접속해보면
 
-![스크린샷 2025-05-17 오후 5.21.36.png](attachment:ec1c30db-3449-4a0e-a28a-4d41e56641e8:스크린샷_2025-05-17_오후_5.21.36.png)
+<img width="1702" alt="web" src="https://github.com/user-attachments/assets/d7186437-a809-453a-b129-abaa943eab11" />
 
 위와 같이 실습용 게시판이 생성됨
 
@@ -315,11 +332,12 @@ sqlmap, nikto 등의 스캐닝 도구가 포함된 user-agent가 `/var/log/apach
 
 ## 2. XSS
 
-### Stord XSS (mysql/general.log)
+### Stored XSS (mysql/general.log)
 
 게시글 등에 XSS 코드가 삽입되어 해당 게시글을 조회할 경우 사용자의 쿠키 탈취 등의 공격이 실행
 
-![스크린샷 2025-05-17 오후 5.25.52.png](attachment:7819ea97-8810-424e-ae3b-45936c9c8b50:스크린샷_2025-05-17_오후_5.25.52.png)
+<img width="1702" alt="stored_xss" src="https://github.com/user-attachments/assets/639df687-a949-4691-bd5c-713ccd2af57b" />
+
 
 해당 공격의 경우 피해가 발생하는 시점은 글을 읽는 상황이지만, 그 시점에서 나오는 로그로는 XSS 피해가 일어났음을 탐지하기 어렵다. 때문에 피해가 일어나는 시점이 아닌, XSS 공격을 시도하려는 게시글이 작성된 경우를 탐지하는 것이 좋을 듯하다.
 
@@ -347,7 +365,8 @@ sqlmap, nikto 등의 스캐닝 도구가 포함된 user-agent가 `/var/log/apach
 $content=htmlspecialchars($_POST['content']);
 ```
 
-![스크린샷 2025-05-17 오후 6.11.18.png](attachment:a85d0e73-9742-446d-84ef-3d7da677933f:스크린샷_2025-05-17_오후_6.11.18.png)
+<img width="1702" alt="stored_xss2" src="https://github.com/user-attachments/assets/96d5d2bc-9920-4e28-b34a-37f338be9e4b" />
+
 
 게시글에 작성되는 script 구문이 동작되지는 않지만, sql 쿼리에는 위에 로그에서 확인한 것과 같이
 
@@ -384,11 +403,13 @@ XSS 공격 탐지는 htmlspecialchars로 필터링이 되는 경우에는 `/var/
 
 URL 파라미터 등에 쿼리가 입력될 시
 
-![필터링이 안된 경우](attachment:4d4eaa21-78ed-4d84-b234-e07e298ed484:스크린샷_2025-05-17_오후_6.31.16.png)
+<img width="1702" alt="reflected_xss" src="https://github.com/user-attachments/assets/968a4825-e153-480b-a845-99b9025385f1" />
+
 
 필터링이 안된 경우
 
-![필터링이 안된 경우](attachment:8d115659-fc5d-405b-8752-cfa3b48ad72d:스크린샷_2025-05-17_오후_6.31.27.png)
+<img width="1702" alt="reflected_xss2" src="https://github.com/user-attachments/assets/803f6395-0d86-4882-b49c-29d3596b5ff0" />
+
 
 필터링이 안된 경우
 
@@ -398,7 +419,8 @@ URL 파라미터 등에 쿼리가 입력될 시
 $search_con=htmlspecialchars($_GET['search']);
 ```
 
-![필터링이 된 경우](attachment:a58273cf-0db0-4e39-865d-3e05dc10bc4a:스크린샷_2025-05-17_오후_6.36.59.png)
+<img width="1702" alt="reflected_xss3" src="https://github.com/user-attachments/assets/2dedfbf8-2818-48a6-b0fd-61f3437c91fa" />
+
 
 필터링이 된 경우
 
