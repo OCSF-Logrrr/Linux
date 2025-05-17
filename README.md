@@ -1,4 +1,4 @@
-# Apache/PHP/MySQL
+# Apache/PHP/MySQL (계속 작성 및 수정 중..)
 
 # apache 로그 위치
 
