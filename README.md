@@ -1,5 +1,8 @@
 # Apache/PHP/MySQL (계속 작성 및 수정 중..)
 
+![스크린샷 2025-05-22 오후 7 31 08](https://github.com/user-attachments/assets/aeeacdf0-d36b-4dd7-b56e-ba7704542f9e)
+
+
 # apache 로그 위치
 
 apache 로그는 기본적으로 error.log와 access.log 2가지가 존재한다.
