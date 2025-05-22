@@ -10,43 +10,6 @@ apache 로그는 기본적으로 error.log와 access.log 2가지가 존재한다
 파일 위치는 우분투 기준으로 `/var/log/apache2`에 두 파일 모두 존재
 
 
-# 환경 구축
-
-우분투 24.04에서 환경 구축을 진행하였으며, 웹 사이트는 개인 실습용으로 제작했던 게시판을 사용하였다. ⇒ Debian 계열의 경우 /apache2 경로에 로그가 저장되지만, RHEL, CentOS 계열의 경우 /httpd 경로에 로그가 저장된다.
-
-📌***실습을 하다보니 개인용 게시판보다 DVWA 등의 대응 방안이 완전히 적용된 코드와 아닌 코드를 모두 편리하게 실행 가능한 환경에서 해보는게 좋다고 느꼈다.. 때문에 XSS 이후 실습에서는 DVWA를 사용해볼 생각이다.***
-
-## apache 설치
-
-apache 설치
-
-```bash
-sudo apt install apache2
-```
-
-![apache_install](https://github.com/user-attachments/assets/3c913e3d-1155-4e2d-9d8e-37fa5cdb2f24)
-
-
-apache 서비스 시작 후
-
-```bash
-sudo systemctl start apache2
-```
-
-데몬(서비스) 상태 확인
-
-```bash
-sudo systemctl status apache2
-```
-
-![status_apache](https://github.com/user-attachments/assets/c4608506-574d-4021-a2a1-a34a3a9d647d)
-
-
-localhost에 접속 시 apache 화면이 나오는 것 확인 가능
-
-![localhost](https://github.com/user-attachments/assets/fbcd7a76-48fd-4b20-9a3c-e87e23434e58)
-
-
 ## 로그 위치 및 내용 확인
 
 아래와 같이 /var/log/apache2 경로에 error.log와 access.log가 존재하는 것을 확인
@@ -59,70 +22,14 @@ localhost에 접속 시 apache 화면이 나오는 것 확인 가능
 ![access log_apache](https://github.com/user-attachments/assets/4f8e1021-0da3-4824-b275-83d81e8401aa)
 
 
-현재 로그를 살펴보면
-
-```bash
-127.0.0.1 - - [16/May/2025:23:45:38 +0900] "GET / HTTP/1.1" 200 3460 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0"
-127.0.0.1 - - [16/May/2025:23:45:38 +0900] "GET /icons/ubuntu-logo.png HTTP/1.1" 200 3607 "http://localhost/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0"
-127.0.0.1 - - [16/May/2025:23:45:38 +0900] "GET /favicon.ico HTTP/1.1" 404 487 "http://localhost/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0"
-```
-
-get 요청으로 기본 웹 루트인 /var/www/html/index.html에 접속한 기록과 해당 웹 페이지에서 사용되는 /icons/ubuntu-logo.png 이미지도 정상적으로 제공되었다는 로그가 찍혀있다.
-
-마지막 로그는 브라우저 탭에 표시되는 로고가 없어서 404로 뜨는 것이다.
-
 ### error.log
 
 ![error log_apache](https://github.com/user-attachments/assets/35448b48-a870-469d-a052-5e7bfe681d29)
 
 
-해당 로그도 살펴보면
+# PHP
 
-```bash
-[Fri May 16 23:37:53.610540 2025] [mpm_event:notice] [pid 474085:tid 259233596645408] AH00489: Apache/2.4.58 (Ubuntu) configured -- resuming normal operations
-[Fri May 16 23:37:53.610585 2025] [core:notice] [pid 474085:tid 259233596645408] AH00094: Command line: '/usr/sbin/apache2'
-```
-
-apache가 정상 작동을 한다는 것과 apache가 실행되었다는 것을 나타내준다.
-
-## 웹 사이트 구성
-
-PHP와 MySQL을 통해 만든 개인 실습용 게시판을 apache에 옮기기 위해 환경 구성을 해주었다.
-
-mysql 설치
-
-```bash
-sudo apt install mysql-server
-```
-
-<img width="1578" alt="mysql_install" src="https://github.com/user-attachments/assets/80c2b6c0-60bd-4301-9077-d8d0bda4ebde" />
-
-php 설치
-
-```bash
-sudo apt install php
-```
-
-<img width="1578" alt="php_install" src="https://github.com/user-attachments/assets/ba4a4ec4-2c1b-4176-bce9-d7023522173f" />
-
-
-php에서 mysql과 apache를 사용할 수 있도록 모듈 설치
-
-```bash
-sudo apt install php-mysql
-```
-
-<img width="1578" alt="php-mysql" src="https://github.com/user-attachments/assets/2716a23e-6e37-47e4-8fc3-93943f1b7a1e" />
-
-
-```bash
-sudo apt install libapache2-mod-php
-```
-
-<img width="1578" alt="php-apache" src="https://github.com/user-attachments/assets/ecd7c4fb-a952-49c4-bb4c-821372b33052" />
-
-
-### PHP 및 MySQL 로깅 설정
+### php_errors.log
 
 아래의 경로에서 PHP 로깅 설정 (버전은 8.3으로 되어있기에 어떤 버전을 설치하는지에 따라 다른 명령어 사용)
 
@@ -132,12 +39,7 @@ sudo vi /etc/php/8.3/apache2/php.ini
 
 ![php_error log](https://github.com/user-attachments/assets/5e729302-0991-4107-9484-b9879801fb53)
 
-
-위 부분에 명시된 경로 및 파일에 PHP 에러 로그가 기록되는데,, 여기서 문제가 있다면, 사용자가 어떤 경로를 명시하는 지에 따라서 로그 수집기로 수집할 때 각 환경에 맞는 경로로 사용해야하는 문제가 발생한다고 한다..
-
-⇒ 위 사진 부분의 `error_log =` 다음에 경로나 파일을 따로 명시하지 않으면 apache의 error.log 로 들어간다고 하긴 하는데… ⇒ 이럼 통합은 되겠지만 apache에러랑 php 에러가 섞여서 나누기 힘들지 않을까..? 싶음….
-
-일단 `/var/log/php/php_error.log` 로 설정 해둠..!! (php 디렉토리 만들고 권한 줘야함!!)
+`/var/log/php/php_errors.log` 로 설정
 
 ![php-php_error log](https://github.com/user-attachments/assets/18c672e9-f32b-46d5-9a97-f5bf9aebf5c2)
 
@@ -147,7 +49,11 @@ sudo vi /etc/php/8.3/apache2/php.ini
 ![php-log_errors](https://github.com/user-attachments/assets/8da31eff-899b-4c2a-b52a-b7f981a0dfdd)
 
 
-설정이 끝나고 apache를 재시작 해주면 적용된다. (아직 php를 실행시키지 않아 로그는 아래에서 확인할 예정)
+설정이 끝나고 apache를 재시작 해주면 적용된다.
+
+
+# MySQL
+
 
 이제 MySQL 로그 파일은 아래와 같다.
 
@@ -157,6 +63,8 @@ sudo vi /etc/php/8.3/apache2/php.ini
 - Binary log : 데이터를 변경시키는 모든 명령문 (replica 포함)
 
 이 중에서 error log와 general log에 대한 로그만 수집해보려 한다.
+
+### error.log
 
 error log는 별도의 설정을 해두지 않았다면 `/var/log/mysql/error.log`에 저장이 된다고 한다.
 
@@ -171,6 +79,7 @@ error log는 별도의 설정을 해두지 않았다면 `/var/log/mysql/error.lo
 
 ![cat-error log-mysql](https://github.com/user-attachments/assets/e0a6ba5f-08a4-4ef5-b202-33dce8a9bd7f)
 
+### general.log
 
 general log도 php의 에러 로그와 같이 로깅 설정을 해주고, 경로까지 지정해주어야 한다. 때문에 php 로그와 같은 문제가 있을 수 있지만,, 일단 `/var/log/mysql/general.log` 경로에 저장해주기로 했다.
 
@@ -203,58 +112,6 @@ SET GLOBAL general_log_file = '/var/log/mysql/general.log';
 해당 로그 파일의 출력은 아래와 같이 나온다.
 
 <img width="793" alt="cat_general log" src="https://github.com/user-attachments/assets/3a70f8fe-6188-474b-84ea-d95e34b5466c" />
-
-
-### 웹 사이트 실행 및 데이터베이스 구성
-
-개인 게시판의 코드를 /var/www/html 경로에 가져오고, mysql 데이터베이스 테이블을 만드는 과정이다.
-
-<img width="469" alt="web_dir" src="https://github.com/user-attachments/assets/1ba51617-9f82-4fc6-b9cd-19183d1da13f" />
-
-
-코드는 그냥 로컬에 있는 페이지를 가져왔고, 데이터베이스 설정은 아래와 같이 해주었다.
-
-우선 DB라는 이름의 데이터베이스를 생성해주었다.
-
-```sql
-CREATE DATABASE DB;
-```
-
-<img width="359" alt="DB" src="https://github.com/user-attachments/assets/449557b9-3499-4159-b382-56653c62adcb" />
-
-
-작업할 데이터베이스를 선택해주고
-
-```sql
-USE DB;
-```
-
-아래와 같이 회원 정보를 관리할 member 테이블과 게시글을 관리할 board 테이블을 만들어주었다.
-
-```sql
-CREATE TABLE member(
-    idx INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userid VARCHAR(100) NOT NULL,
-    userpw VARCHAR(100) NOT NULL,
-    userphone VARCHAR(300),
-    useremail VARCHAR(300),
-    username VARCHAR(300)
-);
-```
-
-```sql
-CREATE TABLE board(
-    idx INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userid VARCHAR(100),
-    title VARCHAR(100),
-    content TEXT,
-    date DATE,
-    hit INT(11),
-    file_name VARCHAR(300)
-);
-```
-
-<img width="262" alt="tables" src="https://github.com/user-attachments/assets/375725f1-71ea-479d-b4d6-e39944aff4a1" />
 
 
 ### 웹 사이트 접속 후 동작 확인
