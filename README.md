@@ -12,5 +12,5 @@
 - Chat API : Node.js + MongoDB
 
 ## Ubuntu Version
-Ubuntu 22.04.05 version 사용
+Ubuntu 22.04 사용
 <img width="1600" alt="스크린샷 2025-05-23 오후 5 43 11" src="https://github.com/user-attachments/assets/8bfe8716-ae63-444c-859c-f5c01e9d8c25" />
