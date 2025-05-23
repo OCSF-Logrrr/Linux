@@ -1,6 +1,7 @@
 # Apache/PHP/MySQL (계속 작성 및 수정 중..)
 
-![스크린샷 2025-05-22 오후 7 31 08](https://github.com/user-attachments/assets/aeeacdf0-d36b-4dd7-b56e-ba7704542f9e)
+<img width="306" alt="스크린샷 2025-05-23 오후 5 03 47" src="https://github.com/user-attachments/assets/219f34e5-5591-4b69-8887-6c7ab075b1aa" />
+
 
 
 # apache 로그 위치
