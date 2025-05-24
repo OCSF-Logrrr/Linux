@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-    $conn = mysqli_connect("localhost", "keshu", "1234", "DB");
+    $conn = mysqli_connect("localhost", "test", "1234", "DB");
     $search_con = isset($_GET['search']) ? $_GET['search'] : '';
 ?>
 <head>
