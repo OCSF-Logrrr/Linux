@@ -138,7 +138,16 @@
         <?php
         if (isset($_SESSION['userid']) and $_SESSION['userid'] == $rows['id']) { ?>
             <button class="select_btn1" onclick="location.href='./update.php?number=<?= $number ?>'">수정</button>
-            <button class="select_btn1" onclick="location.href='./delete_process.php?number=<?= $number ?>&id=<?= $_SESSION['userid'] ?>'">삭제</button>
+            <button class="select_btn1" a onclick="ask();">삭제</button>
+            
+            <script>
+                function ask() {
+                    if(confirm("삭제하시겠습니까?")) {
+                        window.location = "./delete_process.php?number=<?$number?>"
+                    }
+                }
+            </script>
+        
         <?php } ?>
     </div>
     
