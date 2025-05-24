@@ -1,5 +1,5 @@
 <?php
-    $conn=mysqli_connect("localhost","keshu","1234","DB");
+    $conn=mysqli_connect("localhost","test","1234","DB");
 
     $title=$_POST['title'];
     $content=$_POST['content'];
