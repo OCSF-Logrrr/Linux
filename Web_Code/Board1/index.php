@@ -6,7 +6,7 @@
     <title>게시판</title>
     <h1>게시판</h1>
     <?php
-        $conn=mysqli_connect("localhost","keshu","1234","DB");
+        $conn=mysqli_connect("localhost","test","1234","DB");
         $sql="select * from board";
         $result=mysqli_query($conn,$sql);
         $num=mysqli_num_rows($result);
