@@ -1,5 +1,5 @@
 <?php
-    $conn=mysqli_connect("localhost","keshu","1234","DB");
+    $conn=mysqli_connect("localhost","test","1234","DB");
     $idx=$_GET["idx"];
     $sql="select * from board where idx=$idx";
     $result=mysqli_query($conn,$sql);
