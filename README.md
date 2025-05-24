@@ -63,11 +63,14 @@ git submodule init
 git submodule update
 ```
 <img width="1336" alt="스크린샷 2025-05-24 오후 2 34 39" src="https://github.com/user-attachments/assets/db5110fa-4b64-49f6-9b2b-b9452384a899" />
+
 ```bash
 sh build.sh
 ./configure --with-pcre2
 ```
+
 <img width="1336" alt="스크린샷 2025-05-24 오후 2 35 14" src="https://github.com/user-attachments/assets/d2d4382d-dd7e-42a5-a2ef-35b65e8d1fb9" />
+
 ```bash
 make
 sudo make install
@@ -104,9 +107,11 @@ sudo vi /etc/apache2/ports.conf
 ```
 <img width="1336" alt="스크린샷 2025-05-24 오후 3 17 37" src="https://github.com/user-attachments/assets/45409afa-1f96-4037-8ba9-ecbc46398414" />
 또한 /etc/apache2/sites-available/000-default.conf 파일의 VirtualHost도 8080 등으로 수정합니다.
+
 ```bash
 sudo vi /etc/apache2/sites-available/000-default.conf
 ```
+
 <img width="1336" alt="스크린샷 2025-05-24 오후 3 18 01" src="https://github.com/user-attachments/assets/26c55276-ab07-4a9e-ac7b-f47697a3c1ed" />
 
 두 파일의 설정이 모두 끝나면 아래의 명령어로 apache 서비스 활성화가 가능합니다.
