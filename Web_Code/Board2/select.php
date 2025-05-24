@@ -99,7 +99,24 @@
     $sql = "SELECT title, content, date, hit, id FROM board WHERE number=$number";
     $result = mysqli_query($conn, $sql);
     $rows = mysqli_fetch_assoc($result);
+
+    $hit = "UPDATE board SET hit = hit + 1 WHERE number = $number";
+    mysqli_query($conn, $hit);
+
+    if (isset($_SESSION['userid'])) {
+        ?><b><?php echo $_SESSION['userid']; ?></b>님 반갑습니다.
+        <button onclick="location.href='./logout_process.php'" style="float:right; font-size:15.5px;">로그아웃</button>
+    <br />
+    <?php
+    } else {
     ?>
+        <button onclick="location.href='./login.php'" style="float:right; font-size:15.5px;">로그인</button>
+        <br />
+    <?php
+    }
+    ?>
+
+
     <table class="select_table" align="center">
         <tr>
             <td colspan="4" class="select_title"><?php echo $rows['title']?></td>
@@ -118,8 +135,11 @@
     </table>
     <div class="select_btn">
         <button class="select_btn1" onclick="location.href='./index.php'">목록</button>
-        <button class="select_btn1" onclick="location.href=''">수정</button>
-        <button class="select_btn1" onclick="location.href=''">삭제</button>    
+        <?php
+        if (isset($_SESSION['userid']) and $_SESSION['userid'] == $rows['id']) { ?>
+            <button class="select_btn1" onclick="location.href='./update.php?number=<?= $number ?>'">수정</button>
+            <button class="select_btn1" onclick="location.href='./delete_process.php?number=<?= $number ?>&id=<?= $_SESSION['userid'] ?>'">삭제</button>
+        <?php } ?>
     </div>
     
 </body>
