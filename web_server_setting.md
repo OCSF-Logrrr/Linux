@@ -1,7 +1,9 @@
 # Apache2/MySQL/PHP 세팅
 > 기본적인 Apache2, MySQL, PHP를 설치하는 방법을 적은 글입니다.
 
-</br>
+- MySQL 8.0.42
+- Apache 2.4.58
+- PHP 7.4.33
 
 ## Apach2 설치
 
