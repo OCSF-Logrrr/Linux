@@ -17,6 +17,7 @@
 - [Chat API : Node.js + MongoDB](#chat-api--nodejs--mongodb)
    - [Node.js](#nodejs)
    - [MongoDB](#mongodb)
+- [Reference](reference)
 
 ## 웹 서비스 인프라 아키텍처
 <img width="50%" alt="스크린샷 2025-05-23 오후 5 03 47" src="https://github.com/user-attachments/assets/219f34e5-5591-4b69-8887-6c7ab075b1aa" />
@@ -53,8 +54,6 @@ sudo ufw disable #비활성화
 sudo ufw status verbose
 ```
 <img width="1336" alt="스크린샷 2025-05-24 오후 2 24 19" src="https://github.com/user-attachments/assets/d354b3ca-8664-483f-8fcb-2211d1c09995" />
-
-자세한 설정은 () 페이지를 참고해주세요.
 
 ## API Gateway - Nginx
 Nginx는 아래의 명령어로 설치 가능합니다.
@@ -215,7 +214,9 @@ sudo systemctl status mongod
 ```
 <img width="1336" alt="스크린샷 2025-05-24 오후 3 41 59" src="https://github.com/user-attachments/assets/9a61190e-c86e-46cc-853c-982e02482f4b" />
 
+# Reference
 
+- https://intotherealworld.tistory.com/61
 
 
 
