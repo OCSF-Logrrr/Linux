@@ -28,10 +28,22 @@
     </style>
 </head>
 <body>
+    <?php
+    session_start();
+    $URL = './login.php';
+    if(!isset($_SESSION['userid'])) {
+        ?>
+        <script>
+            alert("로그인 후 이용해주세요.");
+            location.replace("<?php echo $URL?>");
+            </script>
+            <?php
+    }
+    ?>
     <form action="create_process.php" method="post">
         <table style="padding-top:50px" align=center width=auto border=0 cellpadding=2>
             <tr>
-                <td style="height:40; float:center; background-color:#3C3C">
+                <td style="height:40; float:center; background-color:#5C5C5C">
                     <p style="font-size:25px; text-align:center; color:whilte; margin-top:15px; margin-bottom:15px"><b>게시글 작성하기</b></p>
                 </td>
             </tr>
@@ -40,7 +52,7 @@
                     <table class="table2">
                         <tr>
                             <td>글쓴이</td>
-                            <td><input type="text" name="name" size=30></td>
+                            <td><input type="hidden" name="name" value="<?=$_SESSION['userid']?>" size=30><?=$_SESSION['userid']?></td>
                         </tr>
                         <tr>
                             <td>제목</td>
@@ -50,12 +62,7 @@
                             <td>내용</td>
                             <td><textarea name="content" cols=75 rows=15></textarea></td>
                         </tr>
-
-                        <tr>
-                            <td>비밀번호</td>
-                            <td><input type="password" name="password"size=15 maxlength=15></td>
-                        </tr>
-
+                        <!-- 비밀번호 입력란 X -->
                     </table>
                     <center>
                         <input style="height:26px; width:47px; font-size:16px;" type="submit" value="작성">
