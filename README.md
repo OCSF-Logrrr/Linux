@@ -4,8 +4,8 @@
 
 # 목차
 - [웹 서비스 인프라 아키텍처](#웹-서비스-인프라-아키텍처)
-- [Features](#features)
-- [Installation](#installation)
+- [Ubuntu](#ubuntu)
+- [DNS Server - BIND9](#dns-server---bind9)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
