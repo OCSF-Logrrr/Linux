@@ -14,8 +14,8 @@
    - [PHP](#php)
    - [MySQL](#mysql)
    - [연동 모듈](#연동-모듈)
-- [Chat API : Node.js + MongoDB](#chat-api--node.js--mongodb)
-   - [Node.js](#node.js)
+- [Chat API : Node.js + MongoDB](#chat-api--nodejs--mongodb)
+   - [Node.js](#nodejs)
    - [MongoDB](#mongodb)
 
 ## 웹 서비스 인프라 아키텍처
