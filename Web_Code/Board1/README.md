@@ -3,7 +3,7 @@
 아래의 명령어를 통해 코드 git clone을 진행합니다.
 
 ```bash
-git clone https://github.com/OCSF-Logrrr/Linux/new/main/Web_Code/Board1
+git clone https://github.com/OCSF-Logrrr/Linux/tree/main/Web_Code/Board1
 ```
 
 코드 파일들을 `var/www/html` 경로에 위치하도록 합니다.
