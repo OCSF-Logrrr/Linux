@@ -1,5 +1,56 @@
 # PHP 게시판
 
+### MySQL 설정
+
+아래의 명령을 통해 mysql에 접속합니다.
+```bash
+sudo mysql
+```
+이후 게시판에서 사용할 계정을 생성합니다. (php 코드에 아래의 계정 정보를 설정해두었기 때문에 계정의 정보를 수정하려면 php 코드의 내용도 수정해야 합니다.)
+```sql
+CREATE USER 'test'@'localhost' IDENTIFIED BY '1234';
+```
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'test'@'localhost' WITH GRANT OPTION;
+```
+```sql
+FLUSH PRIVILEGES;
+```
+
+아래의 명령을 통해 데이터베이스를 생성합니다.
+```sql
+CREATE DATABASE DB;
+```
+생성 후 아래 명령어를 통해 작업을 진행할 데이터베이스로 지정합니다.
+```sql
+USE DB;
+```
+
+이후 회원정보를 저장할 member 테이블과 게시판 글을 저장할 board 테이블을 만들어줍니다.
+```sql
+CREATE TABLE member(
+    idx INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(100) NOT NULL,
+    userpw VARCHAR(100) NOT NULL,
+    userphone VARCHAR(300),
+    useremail VARCHAR(300),
+    username VARCHAR(300)
+);
+```
+```sql
+CREATE TABLE board(
+    idx INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(100),
+    title VARCHAR(100),
+    content TEXT,
+    date DATE,
+    hit INT(11),
+    file_name VARCHAR(300)
+);
+```
+
+### apache 적용
+
 아래의 명령어를 통해 코드 git clone을 진행합니다.
 
 ```bash
