@@ -1,0 +1,174 @@
+/* content.css */
+
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* 제목 스타일 */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+    font-size: 45px;
+}
+
+/* 게시판 목록 테이블 스타일 */
+.list {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+}
+
+.list td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.list .title {
+    padding: 20px 20px;
+    font-weight: bold;
+    font-size: 26px;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.list .file {
+    color: #555;
+}
+
+.list .content {
+    padding: 20px 20px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    height: 400px;
+    text-align: left;
+    vertical-align: top;
+    overflow: auto;
+    box-sizing: border-box;
+}
+h4{
+    width: 35px; /* 박스의 가로폭 줄이기 */
+    margin: 10px 325px -23px;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+}
+/* 댓글 목록 스타일 */
+.comment-list {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+}
+
+/* 개별 댓글 항목 스타일 */
+.comment-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment-item:last-child {
+    border-bottom: none; /* 마지막 댓글 항목에는 하단 경계선 제거 */
+}
+
+.comment-item p {
+    margin: 5px 0;
+}
+
+/* 댓글 영역 스타일 */
+.comment {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 댓글 입력창 스타일 */
+.comment textarea {
+    width: 780px;
+    height: 50px; /* 높이를 고정 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    resize: none; /* 사용자가 크기를 조정할 수 없게 함 */
+}
+
+/* 댓글 제출 버튼 스타일 */
+.comment input[type="submit"] {
+    background-color: #37368d;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.comment input[type="submit"]:hover {
+    background-color: #37368d;
+}
+
+/* 버튼 컨테이너 스타일 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.button-container .button, .button-container .button2 {
+    background-color: #37368d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.button-container .button2 {
+    background-color: #37368d;
+}
+
+.button-container .button:hover {
+    background-color: #37368d;
+}
+
+.button-container .button2:hover {
+    background-color: #37368d;
+}
+
+/* 링크 스타일 */
+a {
+    text-decoration: none;
+    color: #37368d;
+}
+
+a:hover {
+    text-decoration: underline;
+}
