@@ -3,7 +3,7 @@
 > 세부적인 설정에 대한 내용은 Setting and Logging 디렉토리의 파일들을 통해 확인 가능합니다.
 
 # 목차
-- [웹 서비스 인프라 아키텍처](#웹 서비스 인프라 아키텍처)
+- [웹 서비스 인프라 아키텍처](#웹-서비스-인프라-아키텍처)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
