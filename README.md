@@ -14,7 +14,7 @@
    - [PHP](#php)
    - [MySQL](#mysql)
    - [연동 모듈](#연동-모듈)
-- [Chat API : Node.js + MongoDB](#chat-api-:-node.js--mongodb)
+- [Chat API : Node.js + MongoDB](#chat-api--node.js--mongodb)
    - [Node.js](#node.js)
    - [MongoDB](#mongodb)
 
