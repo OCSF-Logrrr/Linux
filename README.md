@@ -169,7 +169,7 @@ sudo apt-get update
 sudo apt-get install mongodb-org
 ```
 > 선택 사항으로 아래의 명령어들을 통해 의도하지 않은 업그레이드를 방지하려면 현재 설치된 패키지를 고정할 수 있습니다.
-```bash
+> ```bash
 echo "mongodb-org hold" | sudo dpkg --set-selections
 echo "mongodb-org-database hold" | sudo dpkg --set-selections
 echo "mongodb-org-server hold" | sudo dpkg --set-selections
