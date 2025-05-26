@@ -7,3 +7,4 @@
 ```bash
 sudo cp modsecurity.conf-recommended modsecurity.conf
 ```
+![image](https://github.com/user-attachments/assets/8836a4d1-50ce-4446-893b-e0081e153527)
