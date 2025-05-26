@@ -1,1 +1,1 @@
-# WAF - ModSecurity
+# WAF - ModSecurity + OWASP CRS
