@@ -41,6 +41,7 @@ make modules
 ls objs/ngx_http_modsecurity_module.so
 ```
 ![image](https://github.com/user-attachments/assets/5aad8d30-933c-42d8-bae8-f71ebbf57a7c)
+
 성공 시 확인할 수 있는 명령어로, 성공한 것을 확인할 수 있습니다.
 ### 모듈 설치
 ```bash
