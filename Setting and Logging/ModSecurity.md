@@ -14,6 +14,7 @@ modsecurity.conf-recommemded 원본 파일을 modsecurity.conf 로 복사합니�
 sudo vim modsecurity.conf
 ```
 ![image](https://github.com/user-attachments/assets/cc2ec1ee-fb8f-45be-a8e8-9ec603c5b596)
+
 SecRuleEngine DetectionOnly → SecRuleEngine On 으로 바꿔준 후 :wq!로 저장해줍니다.
 
 ## 2. ModSecurity-Nginx 모듈 빌드
