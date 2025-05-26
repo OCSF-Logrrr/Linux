@@ -8,6 +8,7 @@
 sudo cp modsecurity.conf-recommended modsecurity.conf
 ```
 ![image](https://github.com/user-attachments/assets/8836a4d1-50ce-4446-893b-e0081e153527)
+
 modsecurity.conf-recommemded가 원본 설정파일입니다.
 modsecurity.conf-recommemded 원본 파일을 modsecurity.conf 로 복사합니다.
 ```bash
@@ -59,6 +60,7 @@ sudo vim /etc/nginx/nginx.conf
 load_module /usr/lib/nginx/modules/ngx_http_modsecurity_module.so;
 ```
 ![image](https://github.com/user-attachments/assets/a7c6b5ab-c164-4669-80bf-6495452cd20c)
+
 위의 코드를 추가하고 :wq!로 저장해줍니다.
 ### 사이트 설정 파일 (/etc/nginx/sites-enabled/default)
 ```bash
@@ -66,6 +68,7 @@ modsecurity on;
 modsecurity_rules_file /home/ubuntu/ModSecurity/modsecurity.conf;
 ```
 ![image](https://github.com/user-attachments/assets/ed5ef22b-2162-46c4-b118-0f32b569471c)
+
 > 위의 설정은 server{ } 블록 내부에 작성해줍니다.
 
 ## 4. OWASP CRS 연동
@@ -87,12 +90,14 @@ Include /etc/nginx/coreruleset/crs-setup.conf
 Include /etc/nginx/coreruleset/rules/*.conf
 ```
 ![image](https://github.com/user-attachments/assets/290e1c89-51ea-401e-a598-f34cae01e0e7)
+
 :wq!로 저장해줍니다.
 ### 사이트 설정 수정
 ```bash
 sudo vim /etc/nginx/sites-enabled/default
 ```
 ![image](https://github.com/user-attachments/assets/e145d60d-d4ff-4c5b-bc69-5b5831ff4533)
+
 기존 설정 modsecurity_rules_file /home/ubuntu/ModSecurity/modsecurity.conf; 코드를 modsecurity_rules_file /etc/nginx/modsecurity-crs.conf; 로 한 줄만 변경해줍니다.
 > 이제는 단순 modsecurity.conf 대신, CRS 룰셋까지 포함한 conf를 로드할 수 있습니다.
 
