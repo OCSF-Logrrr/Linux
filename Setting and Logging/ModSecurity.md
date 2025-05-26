@@ -36,6 +36,5 @@ cd nginx-1.24.0
 ./configure --with-compat --add-dynamic-module=../ModSecurity-nginx
 make modules
 ```
-> ```bash
-ls objs/ngx_http_modsecurity_module.so
+> ```bash ls objs/ngx_http_modsecurity_module.so
 ```
