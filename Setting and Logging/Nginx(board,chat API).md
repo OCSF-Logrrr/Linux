@@ -22,6 +22,8 @@
 - [로깅 설정](#로깅-설정)
   - [Nginx 로그 파일](#nginx-로그-파일)
   - [Apache 로그 파일](#apache-로그-파일)
+  - [PHP 로그 파일](#php-로그-파일)
+  - [MySQL 로그 파일](#mysql-로그-파일)
 - [Reference](#reference)
 
 ## Nginx
