@@ -151,6 +151,10 @@ logging {
 
 위의 모든 과정을 거쳐 설정이 끝나면 BIND9를 재시작 해줍니다.
 
+# Reference
+
+- https://velog.io/@gweowe/bind9-%EC%9E%90%EC%B2%B4-DNSDomain-Name-System-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-Ubuntu
+
 ```bash
 sudo systemctl restart bind9
 ```
