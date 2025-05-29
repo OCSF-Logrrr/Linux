@@ -19,7 +19,10 @@
   - [Node.js 설치](#node.js-설치)
   - [코드 작성](#코드-작성)
   - [mongodb 설정](#mongodb-설정)
-
+- [로깅 설정](#로깅-설정)
+  - [Nginx 로그 파일](#nginx-로그-파일)
+  - [Apache 로그 파일](#apache-로그-파일)
+- [Reference](#reference)
 
 ## Nginx
 
