@@ -6,8 +6,8 @@
 
 # 목차
 
-- (Nginx)[#nginx]
-  - (설치)[#설치]
+- [Nginx](#nginx)
+  - [설치](#설치)
 
 ## Nginx
 
