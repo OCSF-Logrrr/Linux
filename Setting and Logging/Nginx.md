@@ -53,7 +53,7 @@ root /var/www/html/nginx;
 
 ```plaintext
 location /api/ {
-  proxy_pass http://0.0.0.0:3000/api/;
+  proxy_pass http://127.0.0.1:3000/api/;
   proxy_http_version 1.1;
   proxy_set_header Upgrade $http_upgrade;
   proxy_set_header Connection 'upgrade';
@@ -62,7 +62,7 @@ location /api/ {
 }
 ```
 
-- `/api/`로 들어오는 요청을 Node.js 서버(0.0.0.0:3000)의 `/api/`로 프록시해줍니다.
+- `/api/`로 들어오는 요청을 Node.js 서버(127.0.0.1:3000)의 `/api/`로 프록시해줍니다.
   - WebSocket 지원
   - HTTP 1.1
   - 필요한 헤더들을 백엔드에 전달
@@ -73,7 +73,7 @@ location /api/ {
 
 ```plaintext
 location /webapi/ {
-  proxy_pass http://0.0.0.0:8080;
+  proxy_pass http://127.0.0.1:8080;
   proxy_set_header Host $host;
   proxy_set_header X-Real-IP $remote_addr;
 
@@ -81,7 +81,7 @@ location /webapi/ {
 }
 ```
 
-- `/webapi/`로 들어오는 요청을 Apache2(0.0.0.0:8080)로 프록시해줍니다.
+- `/webapi/`로 들어오는 요청을 Apache2(127.0.0.1:8080)로 프록시해줍니다.
     - `/webapi/` 접두어를 제거해서 전달
     - 클라이언트 IP 및 Host 정보도 백엔드에 전달
 
