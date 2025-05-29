@@ -24,6 +24,7 @@
   - [Apache 로그 파일](#apache-로그-파일)
   - [PHP 로그 파일](#php-로그-파일)
   - [MySQL 로그 파일](#mysql-로그-파일)
+  - [MongoDB 로그 파일](#mongodb-로그-파일)
 - [Reference](#reference)
 
 ## Nginx
@@ -297,6 +298,8 @@ SET GLOBAL general_log_file = '/var/log/mysql/general.log';
 <img width="506" alt="스크린샷 2025-05-17 오후 4 42 46" src="https://github.com/user-attachments/assets/ebc15a16-e49d-4f4a-a2ce-33ae34e173d5" />
 
 ## MongoDB 로그 파일
+
+MongoDB는 별도의 설정을 하지 않았다면 `/var/log/mongodb/mongod.log` 경로에 기록됩니다.
 
 # Reference
 
