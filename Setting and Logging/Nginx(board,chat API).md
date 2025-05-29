@@ -8,6 +8,12 @@
 
 - [Nginx](#nginx)
   - [설치](#설치)
+  - [설정](#설정)
+    - [api 라우팅 설정](#api-라우팅-설정)
+    - [webapi 라우팅 설정](#webapi-라우팅-설정)
+    - [css 라우팅 설정](#css-라우팅-설정)
+    - [php 라우팅 설정](#php-라우팅-설정)
+- [board API 구성 (Apache + PHP + MySQL)](#board-api-구성-apache--php--mysql)
 
 ## Nginx
 
