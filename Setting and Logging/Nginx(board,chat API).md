@@ -14,6 +14,13 @@
     - [css 라우팅 설정](#css-라우팅-설정)
     - [php 라우팅 설정](#php-라우팅-설정)
 - [board API 구성 (Apache + PHP + MySQL)](#board-api-구성-apache--php--mysql)
+  - [Apache2 설정](#apache2-설정)
+  - [PHP 코드 작성](#php-코드-작성)
+- [chat API 구성 (Node.js + MongoDB)](#chat-api구성node.js--MongoDB)
+  - [Node.js 설치](#node.js-설치)
+  - [코드 작성](#코드-작성)
+  - [mongodb 설정](#mongodb-설정)
+
 
 ## Nginx
 
