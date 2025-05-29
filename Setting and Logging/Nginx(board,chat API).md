@@ -252,6 +252,50 @@ Apache의 로그는 기본적으로 `/var/log/apache2` 경로에 `access.log` �
 
 Nginx와 마찬가지로 `access.log` 파일에는 클라이언트의 요청과 서버의 응답에 대한 정보가 기록되며, `error.log` 파일에는 오류와 예외 상황에 대한 정보가 기록됩니다.
 
+## PHP 로그 파일
+
+`/etc/php/7.4/apache2/php.ini` 경로에서 로깅 설정을 활성화 해주어야 합니다. (버전에 따라 7.4가 아닌 다른 버전이 들어갈 수 있습니다.)
+![스크린샷 2025-05-17 오후 3 37 19](https://github.com/user-attachments/assets/35ffecf6-8bc6-4652-ad85-2708ab3bdb80)
+
+log_errors를 ON으로 설정해주어 로깅을 활성화 해줍니다.
+
+![스크린샷 2025-05-17 오후 3 37 46](https://github.com/user-attachments/assets/11df0851-4965-4895-a11a-8937f6807798)
+
+이후 error_log의 경로및 파일을 위와 같이 명시해주었습니다.
+
+## MySQL 로그 파일
+
+에러 로그를 기록하는 error log와 쿼리가 기록되는 general log를 설정해주었습니다.
+
+error log는 별도의 설정이 없다면 기본적으로 `/var/log/mysql/error.log` 경로에 저장됩니다.
+general log는 mysql에 접속하여 활성화 및 경로 지정을 해주어야 합니다.
+
+```bash
+SHOW VARIABLES LIKE 'general%';
+```
+
+위 명령어를 통해 general log의 활성화 여부를 확인할 수 있습니다.
+
+<img width="602" alt="스크린샷 2025-05-17 오후 4 37 16" src="https://github.com/user-attachments/assets/5f5bab9d-fc9d-4075-a558-91e433ad70b5" />
+
+기본적으로 OFF 설정이 되어있기 때문에 아래 명령어를 통해 ON으로 설정해주고
+
+```bash
+SET GLOBAL general_log = ON;
+```
+
+아래와 같이 경로 및 파일명을 지정해줄 수 있습니다.
+
+```bash
+SET GLOBAL general_log_file = '/var/log/mysql/general.log';
+```
+
+이후 다시 조회해보면 아래와 같이 지정된 경로의 파일로 로그가 활성화 되었다는 것을 확인할 수 있습니다.
+
+<img width="506" alt="스크린샷 2025-05-17 오후 4 42 46" src="https://github.com/user-attachments/assets/ebc15a16-e49d-4f4a-a2ce-33ae34e173d5" />
+
+## MongoDB 로그 파일
+
 # Reference
 
 - https://wikidocs.net/223842
