@@ -1,7 +1,6 @@
 # API Gateway - Nginx
 
 > Nginx 기반 API Gateway 아키텍처에서 Web/API/DB 설정 가이드입니다.
-
 </br>
 
 # 목차
@@ -236,3 +235,20 @@ sudo apt update
 sudo apt install -y mongodb-org
 ```
 
+# 로깅 설정
+
+## Nginx 로그 파일
+
+Nginx의 로그는 기본적으로 `/var/log/nginx` 경로에 `access.log` 파일과 `error.log` 파일에 기록됩니다.
+
+`access.log` 파일에는 클라이언트의 요청과 서버의 응답에 대한 정보가 기록되며, `error.log` 파일에는 오류와 예외 상황에 대한 정보가 기록됩니다.
+
+## Apache 로그 파일
+
+Apache의 로그는 기본적으로 `/var/log/apache2` 경로에 `access.log` 파일과 `error.log` 파일에 기록됩니다.
+
+Nginx와 마찬가지로 `access.log` 파일에는 클라이언트의 요청과 서버의 응답에 대한 정보가 기록되며, `error.log` 파일에는 오류와 예외 상황에 대한 정보가 기록됩니다.
+
+# Reference
+
+- https://wikidocs.net/223842
