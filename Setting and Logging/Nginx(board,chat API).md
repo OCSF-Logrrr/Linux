@@ -72,6 +72,24 @@ root /var/www/html/nginx;
 
 </br>
 
+#### index 라우팅 설정
+
+```plaintext
+location / {
+  proxy_pass http://127.0.0.1:8080;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+- `/`로 들어오는 모든 요청을 내부 Node.js 서버(127.0.0.1:8080)로 프록시합니다.
+  - HTTP 1.1
+  - 클라이언트 IP 및 프로토콜 등 필요한 헤더들을 백엔드에 전달
+
+</br>
+
 #### api 라우팅 설정
 
 ```plaintext
