@@ -50,7 +50,7 @@ sudo apachectl -M | grep security2
 
 security2_module (shared) 가 나오면서 성공적으로 활성화 완료 했음을 알 수 있습니다.
 
-# OWASP Core Rule Set 설치
+# 2. OWASP Core Rule Set 설치
 ## 기존 APT 설치된 CRS 비활성화
 ```bash
 sudo rm -rf /usr/share/modsecurity-crs
