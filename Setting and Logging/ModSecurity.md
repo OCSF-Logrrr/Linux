@@ -1,118 +1,104 @@
 # WAF - ModSecurity + OWASP CRS
 
-> Nginx 서버에 ModSecurity WAF 와 OWASP Core Rule Set(CRS)를 연동하여 실전 공격 탐지 및 차단 기능 활성화합니다.
+> Apache 서버에 ModSecurity WAF 와 OWASP Core Rule Set(CRS)를 연동하여 실전 공격 탐지 및 차단 기능 활성화합니다.
 
-## 1. ModSecurity 설정
-### 설정 파일 복사 및 활성화
+# 1. Apache ModSecurity 설치
 ```bash
-sudo cp modsecurity.conf-recommended modsecurity.conf
+ sudo apt install libapache2-mod-security2
 ```
-![image](https://github.com/user-attachments/assets/8836a4d1-50ce-4446-893b-e0081e153527)
+![image](https://github.com/user-attachments/assets/d89079b8-0eb3-4d87-a8ce-31a45e201f81)
 
-modsecurity.conf-recommemded가 원본 설정파일입니다.
-modsecurity.conf-recommemded 원본 파일을 modsecurity.conf 로 복사합니다.
+## ModSecurity 설정 파일 복사 및 수정
 ```bash
-sudo vim modsecurity.conf
+sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+sudo vim /etc/modsecurity/modsecurity.conf
 ```
-![image](https://github.com/user-attachments/assets/cc2ec1ee-fb8f-45be-a8e8-9ec603c5b596)
+![image](https://github.com/user-attachments/assets/6093555e-02e4-447e-a712-e1606fe89bc5)
 
-SecRuleEngine DetectionOnly → SecRuleEngine On 으로 바꿔준 후 :wq!로 저장해줍니다.
+SecRuleEngine DetectionOnly → On을 수정한 후 :wq! 입력 후 빠져나옵니다.
 
-## 2. ModSecurity-Nginx 모듈 빌드
-### 모듈 클론
+### security2 모듈 활성화
 ```bash
-cd ~
-git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git
+sudo a2enmod security2
 ```
-![image](https://github.com/user-attachments/assets/4b4f5744-6551-4234-a5aa-64f948937eb5)
-### Nginx 소스 다운로드 및 압축 해제
-```bash
-cd ~
-wget http://nginx.org/download/nginx-1.24.0.tar.gz
-tar zxvf nginx-1.24.0.tar.gz
-cd nginx-1.24.0
-```
-![image](https://github.com/user-attachments/assets/e3317886-6cbd-45cd-851e-a84ad29e3089)
-### 모듈 컴파일
-```bash
-./configure --with-compat --add-dynamic-module=../ModSecurity-nginx
-make modules
-```
-```bash
-ls objs/ngx_http_modsecurity_module.so
-```
-![image](https://github.com/user-attachments/assets/5aad8d30-933c-42d8-bae8-f71ebbf57a7c)
+![image](https://github.com/user-attachments/assets/521c12d7-608e-442b-a9ed-372f1facfeae)
 
-성공 시 확인할 수 있는 명령어로, 성공한 것을 확인할 수 있습니다.
-### 모듈 설치
-```bash
-sudo mkdir -p /usr/share/nginx/modules
-sudo cp objs/ngx_http_modsecurity_module.so /usr/share/nginx/modules/
-```
-![image](https://github.com/user-attachments/assets/7ff7cd38-c42a-428b-9973-cde41aa5ece9)
+SecRuleEngine DetectionOnly → On을 수정한 후 :wq! 입력 후 빠져나옵니다.
 
-## 3. Nginx에 모듈 연결
-### nginx.conf 상단에 추가
+### Apache 설정에서 Include 설정
 ```bash
-sudo vim /etc/nginx/nginx.conf
+sudo vim /etc/apache2/sites-enabled/000-default.conf
 ```
+![image](https://github.com/user-attachments/assets/b2e4a70a-dc21-428e-ad88-3d619d35072f)
 ```bash
-load_module /usr/lib/nginx/modules/ngx_http_modsecurity_module.so;
+    <Directory /var/www/html>
+        Require all granted
+    </Directory>
 ```
-![image](https://github.com/user-attachments/assets/a7c6b5ab-c164-4669-80bf-6495452cd20c)
+위의 내용을 추가한 후 :wq! 입력 후 엔터로 빠져나옵니다.
 
-위의 코드를 추가하고 :wq!로 저장해줍니다.
-### 사이트 설정 파일 (/etc/nginx/sites-enabled/default)
+## Apache 재시작
 ```bash
-modsecurity on;
-modsecurity_rules_file /home/ubuntu/ModSecurity/modsecurity.conf;
+sudo systemctl restart apache2
 ```
-![image](https://github.com/user-attachments/assets/ed5ef22b-2162-46c4-b118-0f32b569471c)
 
-> 위의 설정은 server{ } 블록 내부에 작성해줍니다.
-
-## 4. OWASP CRS 연동
-### CRS 다운로드 및 설정 파일 구성
+## ModSecurity 동작 확인
 ```bash
-cd /etc/nginx/
+sudo apachectl -M | grep security2
+```
+![image](https://github.com/user-attachments/assets/f15cf7cb-196e-4150-b1fa-e8980d35b370)
+
+security2_module (shared) 가 나오면서 성공적으로 활성화 완료 했음을 알 수 있습니다.
+
+# OWASP Core Rule Set 설치
+## 기존 APT 설치된 CRS 비활성화
+```bash
+sudo rm -rf /usr/share/modsecurity-crs
+```
+
+## OWASP CRS 다운로드
+```bash
+cd /etc/modsecurity
 sudo git clone https://github.com/coreruleset/coreruleset.git
-cd coreruleset
+```
+![image](https://github.com/user-attachments/assets/ad7714d7-5c60-469f-bbf1-c94c79b98394)
+
+/etc/modsecurity/coreruleset 디렉토리가 생깁니다.
+
+## CRS 기본 설정 적용
+```bash
+cd /etc/modsecurity/coreruleset
 sudo cp crs-setup.conf.example crs-setup.conf
 ```
-![image](https://github.com/user-attachments/assets/7f67dc33-ed5b-4aff-a139-166e8c9a2191)
-### 통합 설정 파일 생성
-```bash
-sudo vim /etc/nginx/modsecurity-crs.conf
-```
-```bash
-Include /home/ubuntu/ModSecurity/modsecurity.conf
-Include /etc/nginx/coreruleset/crs-setup.conf
-Include /etc/nginx/coreruleset/rules/*.conf
-```
-![image](https://github.com/user-attachments/assets/290e1c89-51ea-401e-a598-f34cae01e0e7)
+![image](https://github.com/user-attachments/assets/a7bb493b-0552-42d3-b2fd-9534909698af)
 
-:wq!로 저장해줍니다.
-### 사이트 설정 수정
+## Apache에 CRS 룰 포함시키기
+Apache에서 modsecurity.conf 안에서 룰 디렉터리와 세트 파일들을 포함해야 합니다.
 ```bash
-sudo vim /etc/nginx/sites-enabled/default
+sudo vim /etc/modsecurity/modsecurity.conf
 ```
-![image](https://github.com/user-attachments/assets/e145d60d-d4ff-4c5b-bc69-5b5831ff4533)
-
-기존 설정 modsecurity_rules_file /home/ubuntu/ModSecurity/modsecurity.conf; 코드를 modsecurity_rules_file /etc/nginx/modsecurity-crs.conf; 로 한 줄만 변경해줍니다.
-> 이제는 단순 modsecurity.conf 대신, CRS 룰셋까지 포함한 conf를 로드할 수 있습니다.
-
-## 5. 설정 적용
 ```bash
-sudo nginx -t
-sudo systemctl restart nginx
+IncludeOptional /etc/modsecurity/coreruleset/crs-setup.conf
+IncludeOptional /etc/modsecurity/coreruleset/rules/*.conf
 ```
+![image](https://github.com/user-attachments/assets/58d773e3-8746-4e0b-9fb3-404b49d6d135)
 
-## 6. 로그 확인 및 탐지 결과
-### 로그 확인 명령
+맨 아래에 위의 코드 두 줄을 추가하고 :wq! 입력 후 엔터로 빠져나옵니다.
+> Include 위치는 SecRuleEngine On 아래쪽, 마지막에 추가해도 무방합니다.
+
+## 권한 확인
 ```bash
-sudo tail -f /var/log/modsec_audit.log
+sudo chown -R www-data:www-data /etc/modsecurity/coreruleset
 ```
-![image](https://github.com/user-attachments/assets/1fd8dc2e-b106-4819-a12a-331d9671e0d2)
+## Apache 재시작
+```bash
+sudo apachectl configtest
+sudo systemctl restart apache2
+```
+![image](https://github.com/user-attachments/assets/55ece8cf-c8c0-44d9-b53d-e1f681e4c4df)
+
+Syntax OK가 정상적으로 뜬 것을 확인할 수 있으며 설치가 성공됐음을 알 수 있습니다.
+
 ### 탐지 예시 (XSS 시도)
 - <script>alert(1)</script> 요청 탐지
 - 감지된 룰:
