@@ -24,7 +24,7 @@ sudo ufw enable
 systemctl restart rsyslog
 
 #BIND9 설치
-sudo apt-get install bind9
+sudo apt-get install bind9 -y
 
 #BIND9 Zone 파일 생성
 cat << 'EOF' > /etc/bind/db.${domain_name}.zone
@@ -238,10 +238,17 @@ echo 'IncludeOptional /etc/modsecurity/coreruleset/rules/*.conf' >> /etc/modsecu
 #Apache2 재시작
 systemctl restart apache2
 
-#Node.js 설치
+#Node.js 설치 (node.js, npm 특정 버전 설치)
 apt install -y nodejs npm
-cd /opt && git clone https://github.com/snoopysecurity/dvws-node chatapi
-cd chatapi && npm install
+cd /opt
+git clone https://github.com/snoopysecurity/dvws-node chatapi
+cd chatapi
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.nvm/nvm.sh
+nvm install 16.19.0
+nvm use 16.19.0
+nvm alias default 16.19.0
+npm install
 nohup node app.js > /var/log/chatapi.log 2>&1 &
 
 #UFW 방화벽 설정
