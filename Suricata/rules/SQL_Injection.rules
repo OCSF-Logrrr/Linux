@@ -1,0 +1,39 @@
+# SQLi: ' OR 1=1--  패턴(URL에 입력한 것)
+
+alert http any any -> any any (\
+    msg:"SQL 인젝션 시도 탐지 – ' OR 1=1 조건문 항상 참 (URL)";\
+    flow:established,to_server;\
+    uricontent:"' OR 1=1--";\
+    nocase; \
+    classtype:web-application-attack;\
+    priority:2;\
+    sid:1000000;\
+    rev:1;\
+)
+
+# SQLi: ' OR 1=1-- 패턴(게시판 검색창에 SQL 인젝션 공격)
+
+alert http any any -> any any (\
+    msg:"SQL 인젝션 시도 탐지 - ' OR 1=1 조건문 항상 참 (게시판 검색창)";\	
+    flow:established,to_server;\
+    http.uri;\
+    pcre:"/(?:%27|')(?:\+|%20|\s)*or(?:\+|%20|\s)*1(?:=|%3D)1--/i";\
+    classtype:web-application-attack;\
+    priority:2;\
+    sid:1000001;\
+    rev:1;\
+)
+
+# SQLi: 로그인 페이지에서 SQL 인젝션 공격을 통해 어드민 계정으로 접속하는거 탐지
+
+alert http any any -> any any ( \
+    msg:"SQLi 인젝션 시도 탐지 - ' OR 1=1-- 조건문 항상 참(로그인 페이지)";\
+    flow:to_server, established; \
+    content:"POST"; http_method; nocase; \
+    uricontent:"/webapi/member/login_ok.php"; nocase; \
+    pcre:"/(%27|')(\+|%20|\s)*OR(\+|%20|\s)*1(%3D|=)1--/i"; \
+    classtype:web-application-attack; \
+    sid:1000002; \
+    rev:1; \
+)
+
