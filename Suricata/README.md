@@ -100,7 +100,6 @@ sudo systemctl restart suricata
 ## 6. 탐지 결과 보기
 - [🖼️ SQL Injection 탐지 화면](results/sqli_detected.png)
 - [🖼️ XSS 탐지 화면](results/xss_detected.png)
-- [📄 eve.json 샘플 로그](results/eve-sample.json)
 
 ## 7. 파일 구성
 ```bash
@@ -112,10 +111,9 @@ Suricata
 │   └── XSS.rules
 ├── results/
 │   ├── sqli_detected.png
-│   ├── xss_detected.png
-│   └── eve-sample.json
-
+│   └── xss_detected.png
 ```
+
 ## 8. 참고 자료
 - [Suricata 공식 문서 (docs.suricata.io)](https://docs.suricata.io/)
 - [Suricata 룰셋 문법 가이드](https://docs.suricata.io/en/latest/rules/)
