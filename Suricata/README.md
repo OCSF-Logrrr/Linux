@@ -30,4 +30,93 @@ Ubuntu 환경에서 Suricata를 설치하고, 커스텀 룰셋을 이용해 웹 
 
 ---
 
-## 1-환경-및-사전-조건
+## 1. 환경 및 사전 조건
+| 항목 | 내용 |
+|------|------|
+| OS | Ubuntu 22.04 |
+| Suricata | 7.0.10 |
+| 테스트 도구 | 브라우저 |
+| 실습 인터페이스 | enX0 |
+
+## 2. Suricata 설치
+```bash
+sudo add-apt-repository ppa:oisf/suricata-stable
+sudo apt update
+sudo apt install -y suricata suricata-update jq
+```
+#### 설치확인:
+```
+suricata --build-info
+```
+
+## 3. 설정 파일 구성
+
+### 인터페이스 설정 (`/etc/suricata/suricata.yaml`)
+
+```
+af-packet:
+ - interface: enX0
+   cluster-id: 99
+   defrag: yes
+```
+
+### 룰셋 등록
+
+```
+rule-files:
+  - SQL_Injection.rules
+  - XSS.rules
+```
+
+## 4. 커스텀 룰셋 작성
+자세한 내용은 `rules/SQL_Injection.rules` 참조
+
+예시 - SQL Injection 탐지 룰:
+```
+alert http any any -> any any (\
+    msg:"SQL 인젝션 시도 탐지 – ' OR 1=1 조건문 항상 참 (URL)";\
+    flow:established,to_server;\
+    uricontent:"' OR 1=1--";\
+    nocase; \
+    classtype:web-application-attack;\
+    priority:2;\
+    sid:1000000;\
+    rev:1;\
+)
+```
+## 5. 공격 시뮬레이션 및 테스트
+
+`curl`을 사용해 SQLi 또는 XSS 요청을 보낸 후 로그 확인:
+```bash
+curl -G http://ns.logrrrrrrr.site/webapi/board/search.php?search=1%27+or+1%3D1--+
+```
+
+설정 테스트 및 Suricata 실행:
+```bash
+sudo suricata -T -c /etc/suricata/suricata.yaml -v
+sudo systemctl restart suricata
+```
+
+## 6. 탐지 결과 보기
+- [🖼️ SQL Injection 탐지 화면](results/sqli_detected.png)
+- [🖼️ XSS 탐지 화면](results/xss_detected.png)
+- [📄 eve.json 샘플 로그](results/eve-sample.json)
+
+## 7. 파일 구성
+```bash
+Suricata
+├── README.md
+├── suricata.yaml
+├── rules/
+│   └── SQL_Injection.rules
+│   └── XSS.rules
+├── results/
+│   ├── sqli_detected.png
+│   ├── xss_detected.png
+│   └── eve-sample.json
+
+```
+## 8. 참고 자료
+- [Suricata 공식 문서 (docs.suricata.io)](https://docs.suricata.io/)
+- [Suricata 룰셋 문법 가이드](https://docs.suricata.io/en/latest/rules/)
+- [Suricata Log Format - eve.json 구조](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html)
