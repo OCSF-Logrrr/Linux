@@ -1,16 +1,16 @@
-<link href="/profile.css" rel="stylesheet" type="text/css">
+<link href="/JWT_Login/profile.css" rel="stylesheet" type="text/css">
 <?php
 $conn=mysqli_connect("localhost","test","1234","DB");
 $sql="select * from member";
 $result=mysqli_query($conn,$sql);
 $num=mysqli_num_rows($result);
-require 'JWT_class.php';
+require '/JWT_Login/JWT_class.php';
 
 $jwt = new JWT();
 
 if (!isset($_COOKIE['token'])) {
     echo "<script>alert('로그인 후 이용 가능');";
-    echo "location='/login.php';</script>";
+    echo "location='/JWT_Login/login.php';</script>";
     exit;
 }
 
@@ -46,7 +46,7 @@ if ($jwt->dehashing($token)) {
 ?>
         <h1>사용자 정보</h1>
         <h3>name: <?= $payload['name']; ?></h3>
-        <div class='logout'><a href='/login.php'><button>로그아웃</button></a></div>
+        <div class='logout'><a href='/JWT_Login/login.php'><button>로그아웃</button></a></div>
 <?php    
     }
 }
