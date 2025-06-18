@@ -1,6 +1,6 @@
 <?php
 $conn=mysqli_connect("localhost","test","1234","DB");
-require '/JWT_Login/JWT_class.php';
+require './JWT_class.php';
 
 $jwt = new JWT();
 
@@ -20,7 +20,7 @@ $row=mysqli_fetch_object($result);
         setcookie("token", $token, time()+86400, "/", "", false, true);
 
         echo "<script>alert('로그인 성공');";
-        echo "location='profile.php';</script>";
+        echo "location='./profile.php';</script>";
     }
 
 ?>
@@ -29,13 +29,13 @@ $row=mysqli_fetch_object($result);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="/JWT_Login/login.css" rel="stylesheet" type="text/css">
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
     <title>Login</title>
     <h1>로그인 페이지</h1>
 </head>
 <body>
     <table align="center" class="list">
-        <form method="post" action="/JWT_Login/login.php">
+        <form method="post" action="./login.php">
             <tr><td><input class="member" type="text" name="name" placeholder="ID" required></td></tr>
             <tr><td><input class="member" type="text" name="pw" placeholder="Password" required></td></tr>
             <tr><td align="center"><input type="submit" value="로그인" class="button">
