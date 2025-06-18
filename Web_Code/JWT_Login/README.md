@@ -10,6 +10,6 @@
 ```bash
 sudo git clone https://github.com/OCSF-Logrrr/Linux.git
 ```
-이후 JWT_Login 디렉토리 안에 존재하는 파일들을 /var/www/html 경로에 위치하도록 합니다.
+이후 JWT_Login 디렉토리 안에 존재하는 파일들을 /var/www/html/apache2 경로에 위치하도록 합니다.
 
 이후 /login.php 경로에서 로그인 페이지 이용이 가능합니다.
