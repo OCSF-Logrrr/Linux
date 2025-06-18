@@ -1,12 +1,12 @@
 <?php
-$conn=mysqli_connect("localhost","test","1234","JWT");
+$conn=mysqli_connect("localhost","test","1234","DB");
 require 'JWT_class.php';
 
 $jwt = new JWT();
 
 $name = $_POST['name'];
 $pw = $_POST['pw'];
-$sql="SELECT * FROM member where userid='$name' and pw='$pw'";
+$sql="SELECT * FROM member where userid='$name' and userpw='$pw'";
 $result=mysqli_query($conn,$sql);
 $row=mysqli_fetch_object($result);
 
