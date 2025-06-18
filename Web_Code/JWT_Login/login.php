@@ -29,13 +29,13 @@ $row=mysqli_fetch_object($result);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="/login.css" rel="stylesheet" type="text/css">
+    <link href="/JWT_Login/login.css" rel="stylesheet" type="text/css">
     <title>Login</title>
     <h1>로그인 페이지</h1>
 </head>
 <body>
     <table align="center" class="list">
-        <form method="post" action="login.php">
+        <form method="post" action="/JWT_Login/login.php">
             <tr><td><input class="member" type="text" name="name" placeholder="ID" required></td></tr>
             <tr><td><input class="member" type="text" name="pw" placeholder="Password" required></td></tr>
             <tr><td align="center"><input type="submit" value="로그인" class="button">
