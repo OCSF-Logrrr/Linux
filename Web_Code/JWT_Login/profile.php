@@ -1,4 +1,4 @@
-<link href="/JWT_Login/profile.css" rel="stylesheet" type="text/css">
+<link href="/css/profile.css" rel="stylesheet" type="text/css">
 <?php
 $conn=mysqli_connect("localhost","test","1234","DB");
 $sql="select * from member";
