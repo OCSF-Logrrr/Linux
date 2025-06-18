@@ -11,5 +11,6 @@
 sudo git clone https://github.com/OCSF-Logrrr/Linux.git
 ```
 이후 JWT_Login 디렉토리와 디렉토리 안에 존재하는 파일들이 `/var/www/html/apache2` 경로에 위치하도록 합니다.
+> nginx을 함께 사용한다면 default 파일의 설정값을 잘 확인해주어야 합니다.
 
 이후 /login.php 경로에서 로그인 페이지 이용이 가능합니다.
