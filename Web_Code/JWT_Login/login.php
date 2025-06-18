@@ -1,6 +1,6 @@
 <?php
 $conn=mysqli_connect("localhost","test","1234","DB");
-require 'JWT_class.php';
+require '/JWT_Login/JWT_class.php';
 
 $jwt = new JWT();
 
