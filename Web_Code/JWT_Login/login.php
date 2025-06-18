@@ -6,7 +6,7 @@ $jwt = new JWT();
 
 $name = $_POST['name'];
 $pw = $_POST['pw'];
-$sql="SELECT * FROM test where name='$name' and pw='$pw'";
+$sql="SELECT * FROM member where userid='$name' and pw='$pw'";
 $result=mysqli_query($conn,$sql);
 $row=mysqli_fetch_object($result);
 
