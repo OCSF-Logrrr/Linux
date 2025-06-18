@@ -1,7 +1,7 @@
 <link href="/profile.css" rel="stylesheet" type="text/css">
 <?php
-$conn=mysqli_connect("localhost","test","1234","JWT");
-$sql="select * from test";
+$conn=mysqli_connect("localhost","test","1234","DB");
+$sql="select * from member";
 $result=mysqli_query($conn,$sql);
 $num=mysqli_num_rows($result);
 require 'JWT_class.php';
@@ -37,8 +37,8 @@ if ($jwt->dehashing($token)) {
         ?>
         <tbody>
         <tr> 
-            <td style="width: 10%;"><?=$row->name?></td>
-            <td style="width: 10%;"><?=$row->pw?></td>
+            <td style="width: 10%;"><?=$row->userid?></td>
+            <td style="width: 10%;"><?=$row->userpw?></td>
         </tr>
         <?php
             }mysqli_close($conn);
