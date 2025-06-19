@@ -2,10 +2,6 @@
 
 Ubuntu 환경에서 Suricata를 설치하고, 커스텀 룰셋을 이용해 웹 기반 공격(SQL Injection, XSS 등)을 탐지합니다.
 
-<p align="center">
-  <img src="results/SQLi_detected.png" width="800" alt="SQLi 탐지 예시">
-</p>
-
 ---
 
 ## 📌 프로젝트 개요
