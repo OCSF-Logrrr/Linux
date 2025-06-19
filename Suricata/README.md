@@ -98,6 +98,11 @@ sudo systemctl restart suricata
 ```
 
 ## 6. 탐지 결과 보기
+```
+cd /var/log/suricata
+tail -f eve.json | jq
+```
+jq 명령어를 통해 json 파일을 깔끔하게 볼 수 있다.
 - [🖼️ SQL Injection 탐지 화면](results/sqli_detected.png)
 - [🖼️ XSS 탐지 화면](results/xss_detected.png)
 
