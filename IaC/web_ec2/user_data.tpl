@@ -4,8 +4,8 @@
 exec > /var/log/user_data.log 2>&1
 
 #패키지 리스트 업데이트
-sudo apt update
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 
 #UFW 설치
 sudo apt install ufw
@@ -244,7 +244,8 @@ cd /opt
 git clone https://github.com/snoopysecurity/dvws-node chatapi
 cd chatapi
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-source ~/.nvm/nvm.sh
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
 nvm install 16.19.0
 nvm use 16.19.0
 nvm alias default 16.19.0
@@ -255,3 +256,29 @@ nohup node app.js > /var/log/chatapi.log 2>&1 &
 sudo ufw allow 22/tcp
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
+
+#Suricata 설치
+sudo add-apt-repository ppa:oisf/suricata-stable
+sudo apt update -y
+sudo apt install -y suricata suricata-update jq
+
+#Suricata 설정 파일 Github의 suricata.yaml 파일로 덮어쓰기
+curl -o /etc/suricata/suricata.yaml https://raw.githubusercontent.com/OCSF-Logrrr/Linux/main/Suricata/suricata.yaml
+
+#Suricata Rules 다운로드
+curl -o /etc/suricata/rules/SQL_Injection.rules https://raw.githubusercontent.com/OCSF-Logrrr/Linux/main/Suricata/rules/SQL_Injection.rules
+curl -o /etc/suricata/rules/XSS.rules https://raw.githubusercontent.com/OCSF-Logrrr/Linux/main/Suricata/rules/XSS.rules
+
+sudo systemctl restart suricata
+
+#Filebeat 설치
+wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.6.2-amd64.deb
+sudo dpkg -i filebeat-8.6.2-amd64.deb
+
+#Filebeat.yml 파일 수정
+export IP_PORT=${ip_port}
+curl -o /etc/filebeat/filebeat.yml.tpl https://raw.githubusercontent.com/OCSF-Logrrr/filebeat/main/web_filebeat.yml
+envsubst < /etc/filebeat/filebeat.yml.tpl > /etc/filebeat/filebeat.yml
+
+sudo systemctl enable filebeat
+sudo systemctl start filebeat
