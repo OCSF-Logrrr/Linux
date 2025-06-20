@@ -23,3 +23,9 @@ variable "key_name" {
   default     = "whs_ocsf_logrrr"
   description = "key_name"
 }
+
+variable "ip_port" {
+  type        = string
+  default     = ""
+  description = "ip_port"
+}
