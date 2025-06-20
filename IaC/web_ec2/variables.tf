@@ -53,3 +53,9 @@ variable "reverse_zone_file" {
   default     = "db.3.37"
   description = "Reverse zone file name (e.g., db.3.37)"
 }
+
+variable "ip_port" {
+  type        = string
+  default     = ""
+  description = "ip_port"
+}
