@@ -63,6 +63,7 @@ resource "aws_instance" "web_server_instance" {
     enable_reverse_zone = var.enable_reverse_zone
     reverse_zone_name   = var.reverse_zone_name
     reverse_zone_file   = var.reverse_zone_file
+    ip_port = var.ip_port
   })
 }
 
