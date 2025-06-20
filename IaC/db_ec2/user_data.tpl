@@ -49,7 +49,7 @@ sudo dpkg -i filebeat-8.6.2-amd64.deb
 
 #Filebeat.yml 파일 수정
 export IP_PORT=${ip_port}
-curl -o /etc/filebeat/filebeat.yml.tpl https://raw.githubusercontent.com/OCSF-Logrrr/filebeat/main/web_filebeat.yml
+curl -o /etc/filebeat/filebeat.yml.tpl https://raw.githubusercontent.com/OCSF-Logrrr/filebeat/main/db_filebeat.yml
 envsubst < /etc/filebeat/filebeat.yml.tpl > /etc/filebeat/filebeat.yml
 
 sudo systemctl enable filebeat
