@@ -4,7 +4,7 @@
 exec > /var/log/user_data.log 2>&1
 
 #패키지 리스트 업데이트
-sudo apt update
+sudo apt update -y
 sudo apt upgrade -y
 
 #패키지 설치
@@ -17,7 +17,7 @@ curl -fsSL https://pgp.mongodb.com/server-6.0.asc | sudo gpg -o /usr/share/keyri
 echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 
 #패키지 리스트 업데이트
-sudo apt update
+sudo apt update -y
 
 #MongoDB 설치
 sudo apt install -y mongodb-org
@@ -42,3 +42,15 @@ sudo chown mysql:mysql /var/log/mysql/mysql.log
 #MySQL 쿼리 로그 설정
 mysql -e "SET GLOBAL general_log = ON;"
 mysql -e "SET GLOBAL general_log_file = '/var/log/mysql/mysql.log';"
+
+#Filebeat 설치
+wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.6.2-amd64.deb
+sudo dpkg -i filebeat-8.6.2-amd64.deb
+
+#Filebeat.yml 파일 수정
+export IP_PORT=${ip_port}
+curl -o /etc/filebeat/filebeat.yml.tpl https://raw.githubusercontent.com/OCSF-Logrrr/filebeat/main/web_filebeat.yml
+envsubst < /etc/filebeat/filebeat.yml.tpl > /etc/filebeat/filebeat.yml
+
+sudo systemctl enable filebeat
+sudo systemctl start filebeat
