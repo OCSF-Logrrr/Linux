@@ -3,7 +3,7 @@ class JWT {
     private $secretKey;
 
     public function __construct() {
-        $this->secretKey = "WWWWHHHHSSSSOOOOCCCCSSSSFFFLLLLOOOOGGGGRRRRRRRRRRRRRR";
+        $this->secretKey = "WWWWHHHHSSSSOOOOCCCCSSSSFFF";
     }
 
     private function base64UrlEncode($data) {
