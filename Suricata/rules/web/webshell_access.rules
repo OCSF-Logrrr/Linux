@@ -1,0 +1,152 @@
+# ------------- 웹 쉘 접근 탐지(확장자별) -----------------
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.php) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.php$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000000;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.jsp) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.jsp$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000001;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.asp) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.asp$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000002;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.aspx) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.aspx$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000003;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.exe) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.exe$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000004;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.py) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.py$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000005;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 업로드된 PHP 파일 실행 시도(.sh) (/files 경로)";\	
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/\/files\/[^\/]+\.sh$/Ui";\
+    classtype:web-application-attack;\
+    sid:3000006;\
+    rev:1;\
+)
+
+# ------- 웹 쉘 명령어 실행 탐지 -------
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(cat 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=cat"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000010;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(ls 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=ls"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000011;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(id 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=id"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000012;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(whoami 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=whoami"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000013;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(uname 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=uname"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000014;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(curl 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=curl"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000015;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(wget 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=wget"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000016;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(nc 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=nc"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000017;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 시스템 파일 조회 시도(ping 명령 실행) (쿼리 스트링 cmd=)";\
+    flow:to_server,established;\
+    uricontent:"cmd=ping"; nocase;\
+    classtype:web-application-attack;\
+    sid:3000018;\
+    rev:1;\
+)
