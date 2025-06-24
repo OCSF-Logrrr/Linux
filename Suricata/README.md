@@ -48,6 +48,8 @@ Suricata/
 
 > 각 디렉터리 내 `README.md` 파일에서 탐지 방식, 테스트 명령어, 로그 예시 등을 확인할 수 있습니다.
 
+---
+
 ## 참고 자료
 - [Suricata 공식 문서 (docs.suricata.io)](https://docs.suricata.io/)
 - [Suricata 룰셋 문법 가이드](https://docs.suricata.io/en/latest/rules/)
