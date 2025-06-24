@@ -1,0 +1,140 @@
+# --------------------------------- 게시판 페이지 ----------------------------------
+
+alert http any any -> any any (\
+    msg:"SQLi - 조건문 무력화 시도(' or 1=1--) (게시판 검색창)";\	
+    flow:to_server,established;\
+    uricontent:"search="; nocase;\
+    pcre:"/(?:%27|')(?:\+|%20|\s)*or(?:\+|%20|\s)*1(?:=|%3D)1--+/i";\
+    classtype:web-application-attack;\
+    sid:1000001;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - 조건문 무력화 시도(' or 1='1) (게시판 검색창)";\	
+    flow:to_server,established;\
+    uricontent:"search="; nocase;\
+    pcre:"/(%27|')(\+|%20|\s)*or(\+|%20|\s)*1(%3D|=)(%27|')1/i";\
+    classtype:web-application-attack;\
+    sid:1000002;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - 조건문 무력화 시도(' or 1=1#) (게시판 검색창)";\	
+    flow:to_server,established;\
+    uricontent:"search="; nocase;\
+    pcre:"/(%27|')(\+|%20|\s)*or(\+|%20|\s)*1(%3D|=)1(%23|#)/i";\
+    classtype:web-application-attack;\
+    sid:1000003;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - DB 버전 조회 시도(@@version) (게시판 검색창)";\
+    flow:to_server, established;\
+    uricontent:"search="; nocase;\
+    pcre:"/union(\+|%20|\s)*select.*(@@version|%40%40version)/i";\
+    classtype:web-application-attack;\
+    sid:1000010;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - DB 이름 조회 시도(DATABASE()) (게시판 검색창)";\
+    flow:to_server, established;\
+    uricontent:"search="; nocase;\
+    pcre:"/union(\+|%20|\s)*select.*(DATABASE()|DATABASE%28%29)/i";\
+    classtype:web-application-attack;\
+    sid:1000011;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - DB 구조 유출 시도(information_schema.schemata) (게시판 검색창)";\
+    flow:to_server, established;\
+    uricontent:"search="; nocase;\
+    pcre:"/union(\+|%20|\s)*select.*from(\+|%20|\s)*information_schema\.schemata/i";\
+    classtype:web-application-attack;\
+    sid:1000012;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - 테이블 정보 유출 시도(information_schema.tables) (게시판 검색창)";\
+    flow:to_server, established;\
+    uricontent:"search="; nocase;\
+    pcre:"/union(\+|%20|\s)*select.*from(\+|%20|\s)*information_schema\.tables(\+|%20|\s)where(\+|%20|\s)*table_schema(%3D|=)/i";\
+    classtype:web-application-attack;\
+    sid:1000013;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - 컬럼 정보 유출 시도(information_schema.columns) (게시판 검색창)";\
+    flow:to_server, established;\
+    uricontent:"search="; nocase;\
+    pcre:"/union(\+|%20|\s)*select.*from(\+|%20|\s)*information_schema\.columns(\+|%20|\s)where(\+|%20|\s)*table_name(%3D|=)/i";\
+    classtype:web-application-attack;\
+    sid:1000014;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"SQLi - 계정 정보 유출 시도(userid, userpw 조회) (게시판 검색창)";\
+    flow:to_server, established;\
+    uricontent:"search="; nocase;\
+    pcre:"/union(\+|%20|\s)*select.*userid.*userpw.*from(\+|%20|\s)*member/i";\
+    classtype:web-application-attack;\
+    sid:1000015;\
+    rev:1;\
+)
+
+# ------------------------------- 로그인페이지 ---------------------------------------
+
+
+alert http any any -> any any ( \
+    msg:"SQLi - 조건문 무력화 시도(' or 1=1--) (로그인 페이지)";\
+    flow:to_server, established; \
+    content:"POST"; http_method; nocase; \
+    uricontent:"/webapi/member/login_ok.php"; nocase; \
+    pcre:"/(%27|')(\+|%20|\s)*OR(\+|%20|\s)*1(%3D|=)1--/i"; \
+    classtype:web-application-attack; \
+    sid:1000101; \
+    rev:1; \
+)
+
+
+alert http any any -> any any ( \
+    msg:"SQLi - 조건문 무력화 시도(' or '1'='1) (로그인 페이지)";\
+    flow:to_server, established; \
+    content:"POST"; http_method; nocase; \
+    uricontent:"/webapi/member/login_ok.php"; nocase; \
+    pcre:"/(%27|')(\+|%20|\s)*or(\+|%20|\s)*(%27|')1(%27|')(%3D|=)(%27|')1/i";\
+    classtype:web-application-attack; \
+    sid:1000102; \
+    rev:1; \
+)
+
+alert http any any -> any any ( \
+    msg:"SQLi - 조건문 무력화 시도(' or '1) (로그인 페이지)";\
+    flow:to_server, established; \
+    content:"POST"; http_method; nocase; \
+    uricontent:"/webapi/member/login_ok.php"; nocase; \
+    pcre:"/(%27|')(\+|%20|\s)*or(\+|%20|\s)*(%27|')1/i";\
+    classtype:web-application-attack; \
+    sid:1000103; \
+    rev:1; \
+)
+
+alert http any any -> any any ( \
+    msg:"SQLi - 조건문 무력화 시도('# 주석 처리) (로그인 페이지)";\
+    flow:to_server, established; \
+    content:"POST"; http_method; nocase; \
+    uricontent:"/webapi/member/login_ok.php"; nocase; \
+    pcre:"/(%27|')(\+|%20|\s)(%23|#)/i";\
+    classtype:web-application-attack; \
+    sid:1000104; \
+    rev:1; \
+)
+
