@@ -1,102 +1,52 @@
-# 🛡️ Suricata IDS 탐지 및 실습
+# 🌐 Web Suricata 룰셋
 
-Ubuntu 환경에서 Suricata를 설치하고, 커스텀 룰셋을 이용해 웹 기반 공격(SQL Injection, XSS 등)을 탐지합니다.
+이 디렉터리는 웹 서버를 대상으로 한 공격을 탐지하기 위한 Suricata 룰셋과 설정 파일을 포함합니다.
 
----
-
-## 📌 프로젝트 개요
-
-- **IDS(침입 탐지 시스템)** 이해 및 실습
-- Suricata를 통한 **패킷 분석 및 공격 탐지**
-- **커스텀 룰셋**을 이용한 탐지 정확도 향상
-- `eve.json` 로그 확인 및 시각화 가능 구조 구성
+주요 탐지 대상은 SQL Injection, Cross-site Scripting(XSS), 웹쉘 업로드 및 실행입니다.
 
 ---
 
-## 📂 목차
+## 🔍 탐지 항목 설명
 
-1. [환경 및 사전 조건](#1-환경-및-사전-조건)
-2. [Suricata 설치](#2-suricata-설치)
-3. [설정 파일 구성](#3-설정-파일-구성)
-4. [커스텀 룰셋 작성](#4-커스텀-룰셋-작성)
-5. [공격 시뮬레이션 및 테스트](#5-공격-시뮬레이션-및-테스트)
-6. [탐지 결과 보기](#6-탐지-결과-보기)
-
----
-
-## 1. 환경 및 사전 조건
-| 항목 | 내용 |
+| 항목 | 설명 |
 |------|------|
-| OS | Ubuntu 22.04 |
-| Suricata | 7.0.10 |
-| 테스트 도구 | 브라우저 |
-| 실습 인터페이스 | enX0 |
+| **SQL Injection (SQLi)** | URL 또는 POST 파라미터에서 SQL 조건 우회, DB 구조 유출 시도 탐지 |
+| **XSS** | `<script>`, 이벤트 핸들러 등 반사형/저장형 XSS 코드 삽입 탐지 |
+| **WebShell 실행** | 업로드된 `.php`, `.jsp` 등의 웹쉘 파일 실행 요청 탐지 (`cmd=` 포함) |
 
-## 2. Suricata 설치
-```bash
-sudo add-apt-repository ppa:oisf/suricata-stable
-sudo apt update
-sudo apt install -y suricata suricata-update jq
-```
-#### 설치확인:
-```
-suricata --build-info
-```
+---
 
-## 3. 설정 파일 구성
+## 🧪 테스트 시나리오 예시
 
-### 인터페이스 설정 (`/etc/suricata/suricata.yaml`)
+> 아래는 Suricata 룰셋이 정상적으로 작동하는지 확인하기 위한 테스트 요청 예시입니다.  
+> 실습용 웹 서버 또는 로컬 환경에서 사용해 주세요.
 
-```
-af-packet:
- - interface: enX0
-   cluster-id: 99
-   defrag: yes
-```
+---
 
-### 룰셋 등록
+### 🔹 SQL Injection (SQLi)
 
-```
-rule-files:
-  - SQL_Injection.rules
-  - XSS.rules
-```
+1. 웹사이트 접속: http://ns.logrrrrrrr.site/
+2. **게시글 검색**에 다음 입력: ' or 1=1--
+3. 결과: 모든 게시글이 조회됨 -> SQL 조건 우회 성공
 
-## 4. 커스텀 룰셋 작성
-자세한 내용은 `rules/SQL_Injection.rules` 참조
+### 🔹 Cross-site Scripting (XSS)
 
-예시 - SQL Injection 탐지 룰:
+1. 웹사이트 접속: http://ns.logrrrrrrr.site/webapi/board/write.php
+2. **내용 입력란**에 다음 내용 입력 후 게시:
 ```
-alert http any any -> any any (\
-    msg:"SQL 인젝션 시도 탐지 – ' OR 1=1 조건문 항상 참 (URL)";\
-    flow:established,to_server;\
-    uricontent:"' OR 1=1--";\
-    nocase; \
-    classtype:web-application-attack;\
-    priority:2;\
-    sid:1000000;\
-    rev:1;\
-)
+<script>alert(document.domain)</script>
 ```
-## 5. 공격 시뮬레이션 및 테스트
+3. 다시 해당 게시글을 클릭 -> 알림창(`alert`)이 뜨면 탐지 성공
 
-`curl`을 사용해 SQLi 또는 XSS 요청을 보낸 후 로그 확인:
-```bash
-curl -G http://ns.logrrrrrrr.site/webapi/board/search.php?search=1%27+or+1%3D1--+
-```
+### 🔹 WebShell 실행
 
-설정 테스트 및 Suricata 실행:
-```bash
-sudo suricata -T -c /etc/suricata/suricata.yaml -v
-sudo systemctl restart suricata
-```
+1. 웹쉘 파일(test.php) 업로드
+2. 업로드된 경로에 접속: http://ns.logrrrrrrr.site/webapi/files/test.php?cmd=id
+3. 브라우저에 `uid=33(www-data)` 등의 결과가 보이면 실행 성공
 
-## 6. 탐지 결과 보기
-```
-cd /var/log/suricata
-tail -f eve.json | jq
-```
-jq 명령어를 통해 json 파일을 깔끔하게 볼 수 있다.
-- [🖼️ SQL Injection 탐지 화면](results/sqli_detected.png)
-- [🖼️ XSS 탐지 화면](results/xss_detected.png)
+## 📄 참고
 
+- 룰셋은 `rules/` 디렉터리 내에서 유형별로 구분되어 관리됩니다.
+- `suricata.yaml` 파일은 웹 서버 환경에서 Suricata가 해당 룰셋을 불러오고 동작하도록 설정된 구성 파일입니다.
+- 탐지 결과는 기본적으로 `eve.json` 파일로 출력되며, `outputs:` 설정을 통해 로그 포맷과 저장 경로를 변경할 수 있습니다.
+- 실습용 웹 서버 환경에서 테스트되었으며, 운영 환경 적용 시 룰셋 및 설정을 반드시 검토 후 적용해야 합니다.
