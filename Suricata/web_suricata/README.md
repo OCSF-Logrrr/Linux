@@ -25,13 +25,13 @@
 
 ### 🔹 SQL Injection (SQLi)
 
-1. 웹사이트 접속: http://ns.logrrrrrrr.site/
+1. 웹사이트 접속: http://your-webserver.com/
 2. **게시글 검색**에 다음 입력: ' or 1=1--
 3. 결과: 모든 게시글이 조회됨 -> SQL 조건 우회 성공
 
 ### 🔹 Cross-site Scripting (XSS)
 
-1. 웹사이트 접속: http://ns.logrrrrrrr.site/webapi/board/write.php
+1. 웹사이트 접속: http://your-webserver.com/board/write.php
 2. **내용 입력란**에 다음 내용 입력 후 게시:
 ```
 <script>alert(document.domain)</script>
@@ -41,7 +41,7 @@
 ### 🔹 WebShell 실행
 
 1. 웹쉘 파일(test.php) 업로드
-2. 업로드된 경로에 접속: http://ns.logrrrrrrr.site/webapi/files/test.php?cmd=id
+2. 업로드된 경로에 접속: http://your-webserver.com/files/test.php?cmd=id
 3. 브라우저에 `uid=33(www-data)` 등의 결과가 보이면 실행 성공
 
 ## 📄 참고
