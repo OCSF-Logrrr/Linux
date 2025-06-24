@@ -71,82 +71,112 @@ alert http any any -> any any (\
 
 # ------- 웹 쉘 명령어 실행 탐지 -------
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(cat 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 디렉터리 목록 조회 시도(ls 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=cat"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?ls([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000010;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(ls 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 파일 내용 열람 시도(cat 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=ls"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?cat([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000011;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(id 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 사용자 정보 조회 시도(id 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=id"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?id([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000012;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(whoami 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 로그인 사용자 식별 시도(whoami 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=whoami"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?whoami([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000013;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(uname 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 시스템 커널 정보 조회 시도(uname 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=uname"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?uname([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000014;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(curl 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 외부 네트워크 연결 시도(ping 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=curl"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?ping([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000015;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(wget 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 외부 리소스 다운로드 시도(curl 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=wget"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?curl([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000016;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(nc 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 외부 리소스 다운로드 시도(wget 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=nc"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?wget([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000017;\
     rev:1;\
 )
 
 alert http any any -> any any (\
-    msg:"WebShell - 시스템 파일 조회 시도(ping 명령 실행) (쿼리 스트링 cmd=)";\
+    msg:"WebShell - 루트 권한 전환 시도(su 명령 실행) (/files 경로 쿼리스트링)";\
     flow:to_server,established;\
-    uricontent:"cmd=ping"; nocase;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?su([+%20\s].*|$)/Ui";\
     classtype:web-application-attack;\
     sid:3000018;\
     rev:1;\
 )
+
+alert http any any -> any any (\
+    msg:"WebShell - 권한 상승 시도(sudo 명령 실행) (/files 경로 쿼리스트링)";\
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?sudo([+%20\s].*|$)/Ui";\
+    classtype:web-application-attack;\
+    sid:3000019;\
+    rev:1;\
+)
+
+alert http any any -> any any (\
+    msg:"WebShell - 리버스쉘 연결 시도(nc 명령 실행) (/files 경로 쿼리스트링)";\
+    flow:to_server,established;\
+    uricontent:"/files/"; nocase;\
+    pcre:"/[?&][a-zA-Z0-9_]*=[\"']?nc([+%20\s].*|$)/Ui";\
+    classtype:web-application-attack;\
+    sid:3000020;\
+    rev:1;\
+)
+
