@@ -1,121 +1,49 @@
-# 🛡️ Suricata IDS 탐지 및 실습
+# 🛡️ Suricata
 
-Ubuntu 환경에서 Suricata를 설치하고, 커스텀 룰셋을 이용해 웹 기반 공격(SQL Injection, XSS 등)을 탐지합니다.
+이 프로젝트는 **공격 시나리오에 존재하는 다양한 공격에 대한 로그를 수집 및 탐지**하기 위해  
+침입 탐지 시스템인 **Suricata**를 활용한 룰셋과 설정 파일을 정리한 저장소입니다.
 
----
-
-## 📌 프로젝트 개요
-
-- **IDS(침입 탐지 시스템)** 이해 및 실습
-- Suricata를 통한 **패킷 분석 및 공격 탐지**
-- **커스텀 룰셋**을 이용한 탐지 정확도 향상
-- `eve.json` 로그 확인 및 시각화 가능 구조 구성
+웹 서버와 데이터베이스(DB) 서버 환경에 맞춰 Suricata 룰셋을 구성하고,  
+각 환경별로 탐지 목적에 따라 분리하여 관리합니다.
 
 ---
 
-## 📂 목차
-
-1. [환경 및 사전 조건](#1-환경-및-사전-조건)
-2. [Suricata 설치](#2-suricata-설치)
-3. [설정 파일 구성](#3-설정-파일-구성)
-4. [커스텀 룰셋 작성](#4-커스텀-룰셋-작성)
-5. [공격 시뮬레이션 및 테스트](#5-공격-시뮬레이션-및-테스트)
-6. [탐지 결과 보기](#6-탐지-결과-보기)
-7. [파일 구성](#7-파일-구성)
-8. [참고 자료](#8-참고-자료)
+## 디렉터리 구조
+```
+Suricata/
+├── web_suricata/    # 웹 서버용 Suricata 설정 및 룰셋     
+│   ├── rules/            
+│   │   └── SQL_Injection.rules
+│   │   └── XSS.rules
+│   │   └── webshell_access.rules
+│   ├── suricata.yaml    
+│   └── README.md       
+│
+├── db_suricata/     # DB 서버용 Suricata 설정 및 룰셋   
+│   ├── rules/           
+│   │   └── mysql_access.rules 
+│   ├── suricata.yaml    
+│   └── README.md         
+│
+└── README.md             
+```
 
 ---
 
-## 1. 환경 및 사전 조건
-| 항목 | 내용 |
-|------|------|
-| OS | Ubuntu 22.04 |
-| Suricata | 7.0.10 |
-| 테스트 도구 | 브라우저 |
-| 실습 인터페이스 | enX0 |
+## 📄 하위 룰셋 설명
 
-## 2. Suricata 설치
-```bash
-sudo add-apt-repository ppa:oisf/suricata-stable
-sudo apt update
-sudo apt install -y suricata suricata-update jq
-```
-#### 설치확인:
-```
-suricata --build-info
-```
+### 🔹 [web_suricata](./web_suricata/README.md)
+웹 서버 환경에서 발생하는 공격을 탐지하기 위한 Suricata 룰셋을 포함합니다.
 
-## 3. 설정 파일 구성
+- ✅ SQL Injection (SQLi)
+- ✅ Cross-site Scripting (XSS)
+- ✅ WebShell 업로드 및 실행
 
-### 인터페이스 설정 (`/etc/suricata/suricata.yaml`)
+---
 
-```
-af-packet:
- - interface: enX0
-   cluster-id: 99
-   defrag: yes
-```
+### 🔹 [db_suricata](./db_suricata/README.md)
+데이터베이스 서버에 대한 접근 시도를 탐지하기 위한 Suricata 룰셋을 포함합니다.
 
-### 룰셋 등록
+- ✅ 외부에서 MySQL 서버(포트 3306)로의 비인가 접속 시도
 
-```
-rule-files:
-  - SQL_Injection.rules
-  - XSS.rules
-```
-
-## 4. 커스텀 룰셋 작성
-자세한 내용은 `rules/SQL_Injection.rules` 참조
-
-예시 - SQL Injection 탐지 룰:
-```
-alert http any any -> any any (\
-    msg:"SQL 인젝션 시도 탐지 – ' OR 1=1 조건문 항상 참 (URL)";\
-    flow:established,to_server;\
-    uricontent:"' OR 1=1--";\
-    nocase; \
-    classtype:web-application-attack;\
-    priority:2;\
-    sid:1000000;\
-    rev:1;\
-)
-```
-## 5. 공격 시뮬레이션 및 테스트
-
-`curl`을 사용해 SQLi 또는 XSS 요청을 보낸 후 로그 확인:
-```bash
-curl -G http://ns.logrrrrrrr.site/webapi/board/search.php?search=1%27+or+1%3D1--+
-```
-
-설정 테스트 및 Suricata 실행:
-```bash
-sudo suricata -T -c /etc/suricata/suricata.yaml -v
-sudo systemctl restart suricata
-```
-
-## 6. 탐지 결과 보기
-```
-cd /var/log/suricata
-tail -f eve.json | jq
-```
-jq 명령어를 통해 json 파일을 깔끔하게 볼 수 있다.
-- [🖼️ SQL Injection 탐지 화면](results/sqli_detected.png)
-- [🖼️ XSS 탐지 화면](results/xss_detected.png)
-
-## 7. 파일 구성
-```bash
-Suricata
-├── README.md
-├── suricata.yaml
-├── rules/
-│   └── SQL_Injection.rules
-│   └── XSS.rules
-├── results/
-│   ├── sqli_detected.png
-│   └── xss_detected.png
-```
-
-## 8. 참고 자료
-- [Suricata 공식 문서 (docs.suricata.io)](https://docs.suricata.io/)
-- [Suricata 룰셋 문법 가이드](https://docs.suricata.io/en/latest/rules/)
-- [Suricata Log Format - eve.json 구조](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html)
+> 각 디렉터리 내 `README.md` 파일에서 탐지 방식, 테스트 명령어, 로그 예시 등을 확인할 수 있습니다.
