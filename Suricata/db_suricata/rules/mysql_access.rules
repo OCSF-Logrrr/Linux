@@ -1,4 +1,4 @@
-alert tcp !3.37.240.136 any -> 3.39.142.255 3306 (\
+alert tcp !3.37.240.136 any -> 10.0.2.42 3306 (\
     msg:"MySQL - 외부에서 MySQL 비정상 접속 시도 탐지";\
     flow:to_server,established;\
     classtype:attempted-admin;\
