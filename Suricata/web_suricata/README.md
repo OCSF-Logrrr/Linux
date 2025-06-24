@@ -21,8 +21,6 @@ Ubuntu 환경에서 Suricata를 설치하고, 커스텀 룰셋을 이용해 웹 
 4. [커스텀 룰셋 작성](#4-커스텀-룰셋-작성)
 5. [공격 시뮬레이션 및 테스트](#5-공격-시뮬레이션-및-테스트)
 6. [탐지 결과 보기](#6-탐지-결과-보기)
-7. [파일 구성](#7-파일-구성)
-8. [참고 자료](#8-참고-자료)
 
 ---
 
@@ -102,20 +100,3 @@ jq 명령어를 통해 json 파일을 깔끔하게 볼 수 있다.
 - [🖼️ SQL Injection 탐지 화면](results/sqli_detected.png)
 - [🖼️ XSS 탐지 화면](results/xss_detected.png)
 
-## 7. 파일 구성
-```bash
-Suricata
-├── README.md
-├── suricata.yaml
-├── rules/
-│   └── SQL_Injection.rules
-│   └── XSS.rules
-├── results/
-│   ├── sqli_detected.png
-│   └── xss_detected.png
-```
-
-## 8. 참고 자료
-- [Suricata 공식 문서 (docs.suricata.io)](https://docs.suricata.io/)
-- [Suricata 룰셋 문법 가이드](https://docs.suricata.io/en/latest/rules/)
-- [Suricata Log Format - eve.json 구조](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html)
