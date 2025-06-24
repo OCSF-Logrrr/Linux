@@ -1,8 +1,0 @@
-alert tcp any any -> any 3306 (\
-    msg:"MySQL - 외부에서 DB 접속 시도 탐지";\
-    flow:to_server,established;\
-    classtype:attempted-admin;\
-    sid:4000000;\
-    rev:2;\
-    threshold:type limit, track by_src, count 1, seconds 5;\
-)
