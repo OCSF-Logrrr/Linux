@@ -1,5 +1,5 @@
 <?php
-    $conn = mysqli_connect("3.39.142.255", "root", "1234", "board");
+    $conn = mysqli_connect("localhost", "test", "1234", "DB");
 
     $idx = $_GET["idx"];
 
